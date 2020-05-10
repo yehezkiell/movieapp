@@ -1,24 +1,41 @@
-package com.tkpd.basketballapp
+package com.tkpd.basketballapp.teamlist
 
 import android.os.Bundle
+import android.util.Log
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.viewModels
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
+import com.tkpd.basketballapp.R
+import com.tkpd.basketballapp.util.RetrofitInstanceBuilder
+import com.tkpd.basketballapp.util.ViewModelFactory
 
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
+    private val viewModelFactory = ViewModelFactory()
+    private val viewModel: TeamListViewModel by viewModels(factoryProducer = { viewModelFactory })
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
+        viewModel.getNBATeams()
 
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show()
         }
+
+        viewModel.allTeams.observe(this, Observer {
+            val a  = it
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -36,4 +53,6 @@ class MainActivity : AppCompatActivity() {
             else -> super.onOptionsItemSelected(item)
         }
     }
+
+
 }
