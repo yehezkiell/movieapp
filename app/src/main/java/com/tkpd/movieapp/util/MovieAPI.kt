@@ -11,7 +11,6 @@ import retrofit2.http.Query
  * Created by Yehezkiel on 10/05/20
  */
 interface MovieAPI {
-
     @GET("movie/top_rated")
     suspend fun getTopRatedMovies(@Query("page") page: Int): Response<TopRatedMovies>
 
