@@ -1,9 +1,10 @@
 package com.tkpd.movieapp.util
 
-import com.tkpd.movieapp.model.NbaBasketballTeams
-import com.tkpd.movieapp.model.Team
+import com.tkpd.movieapp.model.MovieDetail
+import com.tkpd.movieapp.model.TopRatedMovies
 import retrofit2.Response
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 /**
@@ -11,9 +12,9 @@ import retrofit2.http.Query
  */
 interface MovieAPI {
 
-    @GET("lookup_all_teams.php")
-    suspend fun getNBALeagueTeam(@Query("id") leagueId: String): Response<NbaBasketballTeams>
+    @GET("movie/top_rated")
+    suspend fun getTopRatedMovies(@Query("page") page: Int): Response<TopRatedMovies>
 
-    @GET("lookupteam.php")
-    fun getTeamDetail(@Query("id") teamId: String): Response<Team>
+    @GET("movie/{movie_id}")
+    suspend fun getMovieDetail(@Path("movie_id") movieId: Int): Response<MovieDetail>
 }

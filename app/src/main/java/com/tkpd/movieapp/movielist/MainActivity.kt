@@ -1,6 +1,7 @@
 package com.tkpd.movieapp.movielist
 
 import android.os.Bundle
+import android.util.Log
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
@@ -22,14 +23,20 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
         viewModel.getNBATeams()
-
+        viewModel.getMovieDetail()
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
+                .setAction("Action", null).show()
         }
 
-        viewModel.allTeams.observe(this, Observer {
-            val a  = it
+        viewModel.movieDetail.observe(this, Observer {
+            val a = it
+            Log.e("detailnya", "$a")
+        })
+
+        viewModel.topRatedMovies.observe(this, Observer {
+            val a = it
+            Log.e("asdnya", "$a")
         })
     }
 
