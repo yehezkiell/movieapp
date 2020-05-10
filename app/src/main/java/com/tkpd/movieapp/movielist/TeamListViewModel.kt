@@ -1,12 +1,10 @@
-package com.tkpd.basketballapp.teamlist
+package com.tkpd.movieapp.movielist
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.tkpd.basketballapp.model.NbaBasketballTeams
-import com.tkpd.basketballapp.util.RetrofitInstanceBuilder
-import kotlinx.coroutines.coroutineScope
+import com.tkpd.movieapp.model.NbaBasketballTeams
+import com.tkpd.movieapp.util.RetrofitInstanceBuilder
 import kotlinx.coroutines.launch
 
 /**
@@ -23,6 +21,6 @@ class TeamListViewModel : ViewModel() {
     }
 
     private suspend fun getNbaAPI(): NbaBasketballTeams? {
-        return RetrofitInstanceBuilder.retrofitInstance.getNBALeagueTeam("4387").body()
+        return RetrofitInstanceBuilder.RETROFIT_INSTANCE.getNBALeagueTeam("4387").body()
     }
 }

@@ -1,8 +1,8 @@
-package com.tkpd.basketballapp.util
+package com.tkpd.movieapp.util
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.tkpd.basketballapp.teamlist.TeamListViewModel
+import com.tkpd.movieapp.movielist.TeamListViewModel
 
 /**
  * Created by Yehezkiel on 10/05/20

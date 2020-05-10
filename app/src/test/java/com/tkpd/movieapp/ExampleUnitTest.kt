@@ -1,4 +1,4 @@
-package com.tkpd.basketballapp
+package com.tkpd.movieapp
 
 import org.junit.Test
 

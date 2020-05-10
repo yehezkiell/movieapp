@@ -1,4 +1,4 @@
-package com.tkpd.basketballapp.util
+package com.tkpd.movieapp.util
 
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
@@ -11,12 +11,12 @@ import retrofit2.converter.gson.GsonConverterFactory
  */
 object RetrofitInstanceBuilder {
 
-    val retrofitInstance: BasketballAPI by lazy {
+    val RETROFIT_INSTANCE: MovieAPI by lazy {
         Retrofit.Builder()
             .baseUrl("https://www.thesportsdb.com/api/v1/json/1/")
             .client(okHttpClientInstance)
             .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
-            .build().create(BasketballAPI::class.java)
+            .build().create(MovieAPI::class.java)
     }
 
     private val okHttpClientInstance: OkHttpClient by lazy {

@@ -1,4 +1,4 @@
-package com.tkpd.basketballapp.model
+package com.tkpd.movieapp.model
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 

@@ -1,19 +1,14 @@
-package com.tkpd.basketballapp.teamlist
+package com.tkpd.movieapp.movielist
 
 import android.os.Bundle
-import android.util.Log
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.viewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
-import com.tkpd.basketballapp.R
-import com.tkpd.basketballapp.util.RetrofitInstanceBuilder
-import com.tkpd.basketballapp.util.ViewModelFactory
+import com.tkpd.movieapp.R
+import com.tkpd.movieapp.util.ViewModelFactory
 
 import kotlinx.android.synthetic.main.activity_main.*
 
