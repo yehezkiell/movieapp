@@ -2,6 +2,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.tkpd.movieapp.movielist.MainActivity">
+
+    <item
+        android:id="@+id/action_search"
+        app:showAsAction="ifRoom"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
+        android:title="Search"/>
+
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
