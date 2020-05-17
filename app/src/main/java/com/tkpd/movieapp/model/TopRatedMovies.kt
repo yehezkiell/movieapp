@@ -7,14 +7,14 @@ data class TopRatedMovies(
     @SerializedName("page")
     val page: Int = 0,
     @SerializedName("results")
-    val results: List<Result> = listOf(),
+    val movieItems: List<MovieItem> = listOf(),
     @SerializedName("total_pages")
     val totalPages: Int = 0,
     @SerializedName("total_results")
     val totalResults: Int = 0
 )
 
-data class Result(
+data class MovieItem(
     @SerializedName("adult")
     val adult: Boolean = false,
     @SerializedName("backdrop_path")
