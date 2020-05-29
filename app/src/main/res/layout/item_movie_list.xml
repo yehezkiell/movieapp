@@ -4,60 +4,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    tools:layout_width="160dp"
     android:padding="4dp">
 
     <ImageView
         android:id="@+id/movie_image"
-        android:layout_width="150dp"
-        android:layout_height="200dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:adjustViewBounds="true"
+        app:layout_constraintDimensionRatio="w,3:2"
         android:scaleType="fitXY"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/movie_title"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         tools:src="@tools:sample/avatars" />
 
     <TextView
         android:id="@+id/movie_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:textStyle="bold"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/movie_image"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/movie_image"
-        app:layout_constraintTop_toTopOf="@+id/movie_image"
         tools:text="Spidermen 3" />
-
-    <TextView
-        android:id="@+id/movie_release_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="10sp"
-        app:layout_constraintStart_toStartOf="@+id/movie_title"
-        app:layout_constraintTop_toBottomOf="@+id/movie_title"
-        tools:text="Release Date" />
-
-    <TextView
-        android:id="@+id/movie_overview"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="18dp"
-        android:ellipsize="end"
-        android:maxLines="4"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/movie_title"
-        app:layout_constraintTop_toBottomOf="@+id/movie_release_date"
-        tools:text="Lorem Ipsum Lorem IpsumLor em IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem IpsumLorem Lorem Ipsum" />
-
-    <TextView
-        android:id="@+id/movie_rating"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/colorPrimary"
-        app:layout_constraintBottom_toBottomOf="@+id/movie_image"
-        app:layout_constraintStart_toStartOf="@+id/movie_title"
-        tools:text="Rating : 4.0 " />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

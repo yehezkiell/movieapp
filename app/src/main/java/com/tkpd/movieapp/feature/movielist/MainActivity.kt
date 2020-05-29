@@ -1,13 +1,9 @@
-package com.tkpd.movieapp.movielist
+package com.tkpd.movieapp.feature.movielist
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import android.view.Menu
-import android.view.MenuItem
-import androidx.lifecycle.Observer
 import com.tkpd.movieapp.R
-import com.tkpd.movieapp.movielist.view.MovieListFragment
+import com.tkpd.movieapp.feature.movielist.view.MovieListFragment
 
 import kotlinx.android.synthetic.main.activity_main.*
 

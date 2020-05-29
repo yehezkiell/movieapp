@@ -1,16 +1,12 @@
-package com.tkpd.movieapp.movielist.view
+package com.tkpd.movieapp.feature.movielist.view
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.tkpd.movieapp.model.MovieDetail
 import com.tkpd.movieapp.model.TopRatedMovies
-import com.tkpd.movieapp.movielist.MovieListRepository
-import com.tkpd.movieapp.util.RetrofitInstanceBuilder
+import com.tkpd.movieapp.datasource.repository.MovieListRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import com.tkpd.movieapp.util.Result.Success
 import com.tkpd.movieapp.util.Result.Error
 import com.tkpd.movieapp.util.Result
 
@@ -21,7 +17,7 @@ class MovieListViewModel(private val movieListRepository: MovieListRepository) :
 
     val topRatedMovies = MutableLiveData<Result<TopRatedMovies?>>()
 
-    fun getMovieDetail() {
+    fun getMovieList() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 val data = movieListRepository.getMovieListFromAPI()
@@ -30,20 +26,5 @@ class MovieListViewModel(private val movieListRepository: MovieListRepository) :
                 topRatedMovies.postValue(Error(e))
             }
         }
-    }
-
-    fun getMovieList() {
-        viewModelScope.launch(Dispatchers.IO) {
-            try {
-
-            } catch (e: Throwable) {
-
-            }
-        }
-    }
-
-
-    private suspend fun getMovieDetailById(): MovieDetail? {
-        return RetrofitInstanceBuilder.RETROFIT_INSTANCE.getMovieDetail(618344).body()
     }
 }

@@ -1,14 +1,11 @@
-package com.tkpd.movieapp.movielist.adapter
+package com.tkpd.movieapp.feature.movielist.adapter
 
-import android.util.Log
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
 import com.tkpd.movieapp.model.MovieItem
-import com.tkpd.movieapp.movielist.view.MovieClickListener
-import com.tkpd.movieapp.movielist.view.MovieListFragment
-import com.tkpd.movieapp.movielist.viewholder.MovieItemViewHolder
+import com.tkpd.movieapp.feature.movielist.view.MovieClickListener
+import com.tkpd.movieapp.feature.movielist.viewholder.MovieItemViewHolder
 
 /**
  * Created by Yehezkiel on 17/05/20

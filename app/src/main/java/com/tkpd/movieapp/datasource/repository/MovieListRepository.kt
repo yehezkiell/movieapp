@@ -1,8 +1,9 @@
-package com.tkpd.movieapp.movielist
+package com.tkpd.movieapp.datasource.repository
 
 import com.tkpd.movieapp.model.TopRatedMovies
 import com.tkpd.movieapp.util.Result
 import com.tkpd.movieapp.util.RetrofitInstanceBuilder
+import com.tkpd.movieapp.util.stateCall
 import retrofit2.Response
 
 /**
@@ -15,13 +16,4 @@ class MovieListRepository() {
             data
         }
     }
-
-    private suspend fun <T : Any> stateCall(call: suspend () -> Response<T>): Result<T> {
-        return if (call.invoke().isSuccessful) {
-            Result.Success(call.invoke().body()!!)
-        } else {
-            Result.Error(Throwable(call.invoke().message()))
-        }
-    }
-
 }

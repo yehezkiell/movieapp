@@ -3,15 +3,15 @@ package com.tkpd.movieapp.model
 
 import com.google.gson.annotations.SerializedName
 
-data class MovieDetail(
+data class MovieListDetail(
     @SerializedName("adult")
     val adult: Boolean = false,
     @SerializedName("backdrop_path")
     val backdropPath: String = "",
     @SerializedName("belongs_to_collection")
-    val belongsToCollection: Any = Any(),
+    val belongsToCollection: BelongsToCollection = BelongsToCollection(),
     @SerializedName("budget")
-    val budget: Float = 0F,
+    val budget: Int = 0,
     @SerializedName("genres")
     val genres: List<Genre> = listOf(),
     @SerializedName("homepage")
@@ -51,39 +51,50 @@ data class MovieDetail(
     @SerializedName("video")
     val video: Boolean = false,
     @SerializedName("vote_average")
-    val voteAverage: Float = 0F,
+    val voteAverage: Double = 0.0,
     @SerializedName("vote_count")
     val voteCount: Int = 0
-)
+) {
+    data class BelongsToCollection(
+        @SerializedName("backdrop_path")
+        val backdropPath: Any = Any(),
+        @SerializedName("id")
+        val id: Int = 0,
+        @SerializedName("name")
+        val name: String = "",
+        @SerializedName("poster_path")
+        val posterPath: Any = Any()
+    )
 
-data class Genre(
-    @SerializedName("id")
-    val id: Int = 0,
-    @SerializedName("name")
-    val name: String = ""
-)
+    data class Genre(
+        @SerializedName("id")
+        val id: Int = 0,
+        @SerializedName("name")
+        val name: String = ""
+    )
 
-data class ProductionCompany(
-    @SerializedName("id")
-    val id: Int = 0,
-    @SerializedName("logo_path")
-    val logoPath: Any = Any(),
-    @SerializedName("name")
-    val name: String = "",
-    @SerializedName("origin_country")
-    val originCountry: String = ""
-)
+    data class ProductionCompany(
+        @SerializedName("id")
+        val id: Int = 0,
+        @SerializedName("logo_path")
+        val logoPath: String = "",
+        @SerializedName("name")
+        val name: String = "",
+        @SerializedName("origin_country")
+        val originCountry: String = ""
+    )
 
-data class ProductionCountry(
-    @SerializedName("iso_3166_1")
-    val iso31661: String = "",
-    @SerializedName("name")
-    val name: String = ""
-)
+    data class ProductionCountry(
+        @SerializedName("iso_3166_1")
+        val iso31661: String = "",
+        @SerializedName("name")
+        val name: String = ""
+    )
 
-data class SpokenLanguage(
-    @SerializedName("iso_639_1")
-    val iso6391: String = "",
-    @SerializedName("name")
-    val name: String = ""
-)
+    data class SpokenLanguage(
+        @SerializedName("iso_639_1")
+        val iso6391: String = "",
+        @SerializedName("name")
+        val name: String = ""
+    )
+}

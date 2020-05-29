@@ -1,7 +1,7 @@
 package com.tkpd.movieapp.util
 
-import com.google.gson.GsonBuilder
 import com.tkpd.movieapp.constant.MovieConstant
+import com.tkpd.movieapp.datasource.MovieAPI
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

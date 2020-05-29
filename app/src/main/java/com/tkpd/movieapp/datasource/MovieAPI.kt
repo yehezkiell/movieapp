@@ -1,6 +1,7 @@
-package com.tkpd.movieapp.util
+package com.tkpd.movieapp.datasource
 
 import com.tkpd.movieapp.model.MovieDetail
+import com.tkpd.movieapp.model.MovieListDetail
 import com.tkpd.movieapp.model.TopRatedMovies
 import retrofit2.Response
 import retrofit2.http.GET
