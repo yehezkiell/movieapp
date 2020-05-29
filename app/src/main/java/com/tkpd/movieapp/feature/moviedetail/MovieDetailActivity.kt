@@ -57,6 +57,8 @@ class MovieDetailActivity : AppCompatActivity() {
     private fun setupToolbar() {
         setSupportActionBar(toolbar)
         appbar.bringToFront()
+
+        supportActionBar?.setDisplayShowTitleEnabled(false);
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
