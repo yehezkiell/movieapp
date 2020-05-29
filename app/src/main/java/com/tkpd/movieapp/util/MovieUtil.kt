@@ -2,8 +2,10 @@ package com.tkpd.movieapp.util
 
 import android.view.View
 import android.widget.ImageView
+import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.tkpd.movieapp.R
 import com.tkpd.movieapp.constant.MovieConstant.MOVIE_ORIGINAL_IMAGE
 import retrofit2.Response
 
@@ -40,6 +42,8 @@ fun String.createImageUrl(): String {
 fun ImageView.loadImageRounded(imageUrl: String, roundedValue: Int = 24) {
     Glide.with(this.context)
         .load(imageUrl.createImageUrl())
+        .error(ContextCompat.getDrawable(this.context, R.drawable.ic_broken_image_black_24dp))
+        .placeholder(ContextCompat.getDrawable(this.context, R.drawable.ic_image_black_24dp))
         .transform(RoundedCorners(roundedValue))
         .into(this)
 }
@@ -47,6 +51,8 @@ fun ImageView.loadImageRounded(imageUrl: String, roundedValue: Int = 24) {
 fun ImageView.loadImage(imageUrl: String) {
     Glide.with(this.context)
         .load(imageUrl.createImageUrl())
+        .error(ContextCompat.getDrawable(this.context, R.drawable.ic_broken_image_black_24dp))
+        .placeholder(ContextCompat.getDrawable(this.context, R.drawable.ic_image_black_24dp))
         .into(this)
 }
 
