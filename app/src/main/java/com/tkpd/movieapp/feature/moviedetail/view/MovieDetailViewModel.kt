@@ -8,11 +8,12 @@ import com.tkpd.movieapp.model.MovieDetail
 import com.tkpd.movieapp.util.Result
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 /**
  * Created by Yehezkiel on 29/05/20
  */
-class MovieDetailViewModel(private val movieDetailRepository: MovieDetailRepository) : ViewModel() {
+class MovieDetailViewModel @Inject constructor(private val movieDetailRepository: MovieDetailRepository) : ViewModel() {
 
     val movieDetail = MutableLiveData<Result<MovieDetail?>>()
 

@@ -9,11 +9,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import com.tkpd.movieapp.util.Result.Error
 import com.tkpd.movieapp.util.Result
+import javax.inject.Inject
 
 /**
  * Created by Yehezkiel on 10/05/20
  */
-class MovieListViewModel(private val movieListRepository: MovieListRepository) : ViewModel() {
+class MovieListViewModel @Inject constructor(private val movieListRepository: MovieListRepository) : ViewModel() {
 
     val topRatedMovies = MutableLiveData<Result<TopRatedMovies?>>()
 

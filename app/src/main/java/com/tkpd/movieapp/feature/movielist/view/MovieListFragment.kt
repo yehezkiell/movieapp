@@ -1,5 +1,6 @@
 package com.tkpd.movieapp.feature.movielist.view
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,22 +8,30 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import com.tkpd.movieapp.MovieApplication
 import com.tkpd.movieapp.R
 import com.tkpd.movieapp.feature.moviedetail.MovieDetailActivity
+import com.tkpd.movieapp.feature.moviedetail.view.MovieDetailViewModel
 import com.tkpd.movieapp.model.MovieItem
 import com.tkpd.movieapp.feature.movielist.adapter.MovieListAdapter
-import com.tkpd.movieapp.util.MovieListViewModelFactory
 import com.tkpd.movieapp.util.doSuccessOrFail
+import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_movie_list.*
+import javax.inject.Inject
 
 /**
  * Created by Yehezkiel on 17/05/20
  */
-class MovieListFragment : Fragment(), MovieClickListener {
+class MovieListFragment : DaggerFragment(), MovieClickListener {
 
-    private val viewModelFactory = MovieListViewModelFactory()
-    private val viewModel: MovieListViewModel by viewModels(factoryProducer = { viewModelFactory })
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    private val viewModel by viewModels<MovieListViewModel> { viewModelFactory }
+
+
     private val adapter: MovieListAdapter by lazy {
         MovieListAdapter(this)
     }

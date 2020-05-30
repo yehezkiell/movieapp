@@ -1,5 +1,6 @@
 package com.tkpd.movieapp.feature.moviedetail.view
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,21 +9,29 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import com.tkpd.movieapp.MovieApplication
 import com.tkpd.movieapp.R
 import com.tkpd.movieapp.constant.MovieConstant
 import com.tkpd.movieapp.constant.MovieConstant.PARAM_MOVIE_ID
+import com.tkpd.movieapp.feature.movielist.view.MovieListViewModel
 import com.tkpd.movieapp.model.MovieDetail
 import com.tkpd.movieapp.util.*
+import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_movie_detail.*
 import kotlinx.android.synthetic.main.item_error_view.*
+import javax.inject.Inject
 
 /**
  * Created by Yehezkiel on 29/05/20
  */
-class MovieDetailFragment : Fragment() {
+class MovieDetailFragment : DaggerFragment() {
 
-    private val viewModelFactory = MovieDetailViewModelFactory()
-    private val viewModel: MovieDetailViewModel by viewModels(factoryProducer = { viewModelFactory })
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    private val viewModel by viewModels<MovieDetailViewModel> { viewModelFactory }
+
     private var movieId: Int? = null
 
     companion object {
@@ -65,6 +74,10 @@ class MovieDetailFragment : Fragment() {
             })
             progress_bar_container.hide()
         })
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
     }
 
     private fun renderView(data: MovieDetail){

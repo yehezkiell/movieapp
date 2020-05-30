@@ -21,7 +21,7 @@ object RetrofitInstanceBuilder {
             .build().create(MovieAPI::class.java)
     }
 
-    private val okHttpClientInstance: OkHttpClient by lazy {
+    val okHttpClientInstance: OkHttpClient by lazy {
         val client = OkHttpClient.Builder()
         client.addInterceptor(loggingInterceptor)
         client.addInterceptor(requestInterceptor)
