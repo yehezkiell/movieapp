@@ -10,6 +10,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 /**
  * Created by Yehezkiel on 10/05/20
+ *
+ * Retorfit Documentation : https://square.github.io/retrofit/
  */
 object RetrofitInstanceBuilder {
 
