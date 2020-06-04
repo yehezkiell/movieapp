@@ -24,7 +24,6 @@
 
         <activity
             android:name="com.tkpd.movieapp.feature.moviedetail.MovieDetailActivity"
-            android:label="@string/label_movie_detail"
             android:theme="@style/AppTheme.NoActionBar"/>
 
     </application>
