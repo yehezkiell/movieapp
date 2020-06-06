@@ -7,11 +7,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.tkpd.movieapp.R
 import com.tkpd.movieapp.feature.moviedetail.MovieDetailActivity
+import com.tkpd.movieapp.feature.movielist.adapter.MovieAdapter
 import com.tkpd.movieapp.model.MovieItem
-import com.tkpd.movieapp.feature.movielist.adapter.MovieListAdapter
 import com.tkpd.movieapp.util.MovieListViewModelFactory
 import com.tkpd.movieapp.util.doSuccessOrFail
 import kotlinx.android.synthetic.main.fragment_movie_list.*
@@ -23,8 +23,8 @@ class MovieListFragment : Fragment(), MovieClickListener {
 
     private val viewModelFactory = MovieListViewModelFactory()
     private val viewModel: MovieListViewModel by viewModels(factoryProducer = { viewModelFactory })
-    private val adapter: MovieListAdapter by lazy {
-        MovieListAdapter(this)
+    private val adapter: MovieAdapter by lazy {
+        MovieAdapter(this)
     }
     private var dummyData: MutableList<MovieItem>? = null
 
@@ -43,7 +43,8 @@ class MovieListFragment : Fragment(), MovieClickListener {
     }
 
     private fun initRecyclerView() {
-        rv_movie_list.layoutManager = GridLayoutManager(context, 3)
+        rv_movie_list.layoutManager = StaggeredGridLayoutManager(3,
+            StaggeredGridLayoutManager.VERTICAL)
         rv_movie_list.adapter = adapter
     }
 
@@ -53,7 +54,7 @@ class MovieListFragment : Fragment(), MovieClickListener {
         viewModel.topRatedMovies.observe(viewLifecycleOwner, Observer { data ->
             data.doSuccessOrFail({
                 dummyData = it.data?.movieItems?.toMutableList()
-                adapter.submitList(it.data?.movieItems?.toMutableList() ?: mutableListOf())
+                adapter.setMovieList(dummyData)
             }, {
 
             })

@@ -1,5 +1,6 @@
 package com.tkpd.movieapp.feature.moviedetail.view
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -14,15 +15,17 @@ import kotlinx.coroutines.launch
  */
 class MovieDetailViewModel(private val movieDetailRepository: MovieDetailRepository) : ViewModel() {
 
-    val movieDetail = MutableLiveData<Result<MovieDetail?>>()
+    private val _movieDetail = MutableLiveData<Result<MovieDetail?>>()
+    val movieDetail: LiveData<Result<MovieDetail?>>
+        get() = _movieDetail
 
     fun getMovieList(movieId: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 val data = movieDetailRepository.getMovieDetailFromAPI(movieId)
-                movieDetail.postValue(data)
+                _movieDetail.postValue(data)
             } catch (e: Throwable) {
-                movieDetail.postValue(Result.Error(e))
+                _movieDetail.postValue(Result.Error(e))
             }
         }
     }
