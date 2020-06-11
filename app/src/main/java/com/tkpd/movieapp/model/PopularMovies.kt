@@ -3,7 +3,7 @@ package com.tkpd.movieapp.model
 
 import com.google.gson.annotations.SerializedName
 
-data class TopRatedMovies(
+data class PopularMovies(
     @SerializedName("page")
     val page: Int = 0,
     @SerializedName("results")

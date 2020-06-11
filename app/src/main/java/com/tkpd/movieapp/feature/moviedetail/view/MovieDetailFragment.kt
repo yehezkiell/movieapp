@@ -3,7 +3,6 @@ package com.tkpd.movieapp.feature.moviedetail.view
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -11,6 +10,7 @@ import androidx.lifecycle.Observer
 import com.tkpd.movieapp.R
 import com.tkpd.movieapp.constant.MovieConstant
 import com.tkpd.movieapp.constant.MovieConstant.PARAM_MOVIE_ID
+import com.tkpd.movieapp.feature.moviedetail.MovieDetailViewModelFactory
 import com.tkpd.movieapp.model.MovieDetail
 import com.tkpd.movieapp.util.*
 import kotlinx.android.synthetic.main.fragment_movie_detail.*
@@ -21,7 +21,8 @@ import kotlinx.android.synthetic.main.item_error_view.*
  */
 class MovieDetailFragment : Fragment() {
 
-    private val viewModelFactory = MovieDetailViewModelFactory()
+    private val viewModelFactory =
+        MovieDetailViewModelFactory()
     private val viewModel: MovieDetailViewModel by viewModels(factoryProducer = { viewModelFactory })
     private var movieId: Int? = null
 
@@ -49,7 +50,7 @@ class MovieDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        progress_bar_container.show()
+        showLoading()
         error_view.hide()
         viewModel.getMovieList(movieId ?: 0)
     }
@@ -63,7 +64,7 @@ class MovieDetailFragment : Fragment() {
             }, {
                 error_view.show()
             })
-            progress_bar_container.hide()
+            hideLoading()
         })
     }
 
@@ -75,5 +76,13 @@ class MovieDetailFragment : Fragment() {
         movie_popularity.text = data.popularity.toString()
         movie_release_date.text = data.releaseDate
         movie_description.text = data.overview
+    }
+
+    private fun showLoading() {
+        progress_bar_container.show()
+    }
+
+    private fun hideLoading() {
+        progress_bar_container.hide()
     }
 }

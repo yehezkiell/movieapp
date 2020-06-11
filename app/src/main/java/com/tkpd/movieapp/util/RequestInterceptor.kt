@@ -1,7 +1,7 @@
 package com.tkpd.movieapp.util
 
+import com.tkpd.movieapp.BuildConfig
 import com.tkpd.movieapp.constant.MovieConstant
-import okhttp3.HttpUrl
 import okhttp3.Interceptor
 import okhttp3.Response
 
@@ -13,7 +13,7 @@ import okhttp3.Response
 class RequestInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         var request = chain.request()
-        val url = request.url().newBuilder().addQueryParameter(MovieConstant.API_KEY_PARAM, MovieConstant.API_KEY).build()
+         val url = request.url().newBuilder().addQueryParameter(MovieConstant.API_KEY_PARAM, BuildConfig.API_KEY).build()
         request = request.newBuilder().url(url).build()
         return chain.proceed(request)
     }

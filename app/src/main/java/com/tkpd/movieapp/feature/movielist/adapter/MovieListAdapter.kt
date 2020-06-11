@@ -3,14 +3,14 @@ package com.tkpd.movieapp.feature.movielist.adapter
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
+import com.tkpd.movieapp.feature.movielist.view.MovieListListener
 import com.tkpd.movieapp.model.MovieItem
-import com.tkpd.movieapp.feature.movielist.view.MovieClickListener
 import com.tkpd.movieapp.feature.movielist.viewholder.MovieItemViewHolder
 
 /**
  * Created by Yehezkiel on 17/05/20
  */
-class MovieListAdapter(val listener: MovieClickListener) :
+class MovieListAdapter(val listener: MovieListListener) :
     ListAdapter<MovieItem, MovieItemViewHolder>(MovieListDiffUtilCallBack()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieItemViewHolder {

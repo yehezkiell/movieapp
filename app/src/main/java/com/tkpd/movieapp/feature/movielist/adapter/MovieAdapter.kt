@@ -2,11 +2,11 @@ package com.tkpd.movieapp.feature.movielist.adapter
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.tkpd.movieapp.feature.movielist.view.MovieClickListener
+import com.tkpd.movieapp.feature.movielist.view.MovieListListener
 import com.tkpd.movieapp.feature.movielist.viewholder.MovieItemViewHolder
 import com.tkpd.movieapp.model.MovieItem
 
-class MovieAdapter(private val listener: MovieClickListener): RecyclerView.Adapter<MovieItemViewHolder>() {
+class MovieAdapter(private val listener: MovieListListener): RecyclerView.Adapter<MovieItemViewHolder>() {
 
     private var movieList: MutableList<MovieItem>? = mutableListOf()
 

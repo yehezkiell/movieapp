@@ -1,8 +1,8 @@
-package com.tkpd.movieapp.util
+package com.tkpd.movieapp.feature.movielist
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.tkpd.movieapp.datasource.repository.MovieListRepository
+import com.tkpd.movieapp.datasource.repository.MovieListRepositoryImpl
 import com.tkpd.movieapp.feature.movielist.view.MovieListViewModel
 
 /**
@@ -11,6 +11,6 @@ import com.tkpd.movieapp.feature.movielist.view.MovieListViewModel
 class MovieListViewModelFactory : ViewModelProvider.Factory {
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return MovieListViewModel(MovieListRepository()) as T
+        return MovieListViewModel(MovieListRepositoryImpl()) as T
     }
 }

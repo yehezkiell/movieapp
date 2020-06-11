@@ -5,8 +5,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.tkpd.movieapp.R
+import com.tkpd.movieapp.feature.movielist.view.MovieListListener
 import com.tkpd.movieapp.model.MovieItem
-import com.tkpd.movieapp.feature.movielist.view.MovieClickListener
 import com.tkpd.movieapp.util.loadImageRounded
 import kotlinx.android.synthetic.main.item_movie_list.view.*
 
@@ -25,7 +25,7 @@ class MovieItemViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         }
     }
 
-    fun bind(data: MovieItem, listener: MovieClickListener) = with(view) {
+    fun bind(data: MovieItem, listener: MovieListListener) = with(view) {
         view.setOnClickListener {
             listener.onClick(data.id)
         }

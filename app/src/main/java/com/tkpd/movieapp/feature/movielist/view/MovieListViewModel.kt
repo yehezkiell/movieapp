@@ -3,8 +3,9 @@ package com.tkpd.movieapp.feature.movielist.view
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.tkpd.movieapp.model.TopRatedMovies
 import com.tkpd.movieapp.datasource.repository.MovieListRepository
+import com.tkpd.movieapp.model.PopularMovies
+import com.tkpd.movieapp.datasource.repository.MovieListRepositoryImpl
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import com.tkpd.movieapp.util.Result.Error
@@ -15,7 +16,7 @@ import com.tkpd.movieapp.util.Result
  */
 class MovieListViewModel(private val movieListRepository: MovieListRepository) : ViewModel() {
 
-    val topRatedMovies = MutableLiveData<Result<TopRatedMovies?>>()
+    val topRatedMovies = MutableLiveData<Result<PopularMovies?>>()
 
     fun getMovieList() {
         viewModelScope.launch(Dispatchers.IO) {
