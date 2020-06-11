@@ -1,8 +1,8 @@
 package com.tkpd.movieapp.datasource
 
+import com.tkpd.movieapp.constant.MovieConstant
 import com.tkpd.movieapp.model.MovieDetail
-import com.tkpd.movieapp.model.MovieListDetail
-import com.tkpd.movieapp.model.TopRatedMovies
+import com.tkpd.movieapp.model.PopularMovies
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -13,9 +13,9 @@ import retrofit2.http.Query
  */
 interface MovieAPI {
     @GET("movie/popular")
-    suspend fun getTopRatedMovies(@Query("page") page: Int,
-                                  @Query("language") language: String): Response<TopRatedMovies>
+    suspend fun getTopRatedMovies(@Query(MovieConstant.KEY_PAGE) page: Int,
+                                  @Query(MovieConstant.KEY_LANGUAGE) language: String): Response<PopularMovies>
 
     @GET("movie/{movie_id}")
-    suspend fun getMovieDetail(@Path("movie_id") movieId: Int): Response<MovieDetail>
+    suspend fun getMovieDetail(@Path(MovieConstant.KEY_MOVIE_ID) movieId: Int): Response<MovieDetail>
 }
