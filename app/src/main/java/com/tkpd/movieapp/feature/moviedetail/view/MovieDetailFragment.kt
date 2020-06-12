@@ -4,20 +4,17 @@ import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.tkpd.movieapp.MovieApplication
 import com.tkpd.movieapp.R
 import com.tkpd.movieapp.constant.MovieConstant
 import com.tkpd.movieapp.constant.MovieConstant.PARAM_MOVIE_ID
-import com.tkpd.movieapp.feature.movielist.view.MovieListViewModel
 import com.tkpd.movieapp.model.MovieDetail
 import com.tkpd.movieapp.util.*
-import dagger.android.support.DaggerFragment
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_movie_detail.*
 import kotlinx.android.synthetic.main.item_error_view.*
 import javax.inject.Inject
@@ -25,7 +22,8 @@ import javax.inject.Inject
 /**
  * Created by Yehezkiel on 29/05/20
  */
-class MovieDetailFragment : DaggerFragment() {
+@AndroidEntryPoint
+class MovieDetailFragment : Fragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory

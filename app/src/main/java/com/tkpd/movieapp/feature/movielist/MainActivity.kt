@@ -4,9 +4,11 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.tkpd.movieapp.R
 import com.tkpd.movieapp.feature.movielist.view.MovieListFragment
+import dagger.hilt.android.AndroidEntryPoint
 
 import kotlinx.android.synthetic.main.activity_main.*
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
