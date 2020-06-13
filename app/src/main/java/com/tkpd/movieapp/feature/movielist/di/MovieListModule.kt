@@ -12,17 +12,6 @@ import dagger.multibindings.IntoMap
 /**
  * Created by Yehezkiel on 30/05/20
  */
-
-@Module
-@InstallIn(ApplicationComponent::class)
-abstract class MovieListModuleProvider {
-
-    @Binds
-    @IntoMap
-    @ViewModelKey(MovieListViewModel::class)
-    internal abstract fun bindMovieViewModel(viewModel: MovieListViewModel): ViewModel
-}
-
 @Module
 @InstallIn(ApplicationComponent::class)
 abstract class MovieListModule {

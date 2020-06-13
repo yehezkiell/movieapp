@@ -24,11 +24,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MovieListFragment : Fragment(), MovieClickListener {
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-
-    private val viewModel by viewModels<MovieListViewModel> { viewModelFactory }
-
+    private val viewModel by viewModels<MovieListViewModel>()
 
     private val adapter: MovieListAdapter by lazy {
         MovieListAdapter(this)

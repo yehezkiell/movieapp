@@ -14,31 +14,30 @@ import kotlin.reflect.KClass
 /**
  * Created by Yehezkiel on 30/05/20
  */
-class ViewModelFactory @Inject constructor(
-    private val creators: Map<Class<out ViewModel>, @JvmSuppressWildcards Provider<ViewModel>>) :
-        ViewModelProvider.Factory {
-
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        val creator = creators[modelClass] ?: creators.asIterable().firstOrNull {
-            modelClass.isAssignableFrom(it.key)
-        }?.value ?: throw IllegalArgumentException("unknown model class $modelClass")
-
-        return try {
-            creator.get() as T
-        } catch (e: Exception) {
-            throw RuntimeException(e)
-        }
-    }
-}
-
-@Module
-@InstallIn(ApplicationComponent::class)
-abstract class ViewModelModule {
-
-    @Binds
-    internal abstract fun bindViewModelFactory(viewModelFactory: ViewModelFactory): ViewModelProvider.Factory
-
-}
+//class ViewModelFactory @Inject constructor(
+//    private val creators: Map<Class<out ViewModel>, @JvmSuppressWildcards Provider<ViewModel>>) :
+//        ViewModelProvider.Factory {
+//
+//    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+//        val creator = creators[modelClass] ?: creators.asIterable().firstOrNull {
+//            modelClass.isAssignableFrom(it.key)
+//        }?.value ?: throw IllegalArgumentException("unknown model class $modelClass")
+//
+//        return try {
+//            creator.get() as T
+//        } catch (e: Exception) {
+//            throw RuntimeException(e)
+//        }
+//    }
+//}
+//
+//@Module
+//abstract class ViewModelModule {
+//
+//    @Binds
+//    internal abstract fun bindViewModelFactory(viewModelFactory: ViewModelFactory): ViewModelProvider.Factory
+//
+//}
 
 @MustBeDocumented
 @Target(

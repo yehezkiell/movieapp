@@ -25,10 +25,8 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MovieDetailFragment : Fragment() {
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    private val viewModel by viewModels<MovieDetailViewModel> { viewModelFactory }
+    private val viewModel by viewModels<MovieDetailViewModel>()
 
     private var movieId: Int? = null
 

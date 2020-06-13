@@ -1,5 +1,6 @@
 package com.tkpd.movieapp.feature.movielist.view
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -14,7 +15,7 @@ import javax.inject.Inject
 /**
  * Created by Yehezkiel on 10/05/20
  */
-class MovieListViewModel @Inject constructor(private val movieListRepository: MovieListRepository) : ViewModel() {
+class MovieListViewModel @ViewModelInject constructor(private val movieListRepository: MovieListRepository) : ViewModel() {
 
     val topRatedMovies = MutableLiveData<Result<TopRatedMovies?>>()
 
