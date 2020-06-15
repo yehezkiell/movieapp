@@ -1,5 +1,6 @@
 package com.tkpd.movieapp.feature.movielist.view
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -16,15 +17,21 @@ import com.tkpd.movieapp.util.Result
  */
 class MovieListViewModel(private val movieListRepository: MovieListRepository) : ViewModel() {
 
-    val topRatedMovies = MutableLiveData<Result<PopularMovies?>>()
+    private val _topRatedMovies = MutableLiveData<Result<PopularMovies?>>()
+    val topRatedMovies : LiveData<Result<PopularMovies?>>
+        get() = _topRatedMovies
+
+    init {
+        _topRatedMovies.value = Result.Loading
+    }
 
     fun getMovieList() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 val data = movieListRepository.getMovieListFromAPI()
-                topRatedMovies.postValue(data)
+                _topRatedMovies.postValue(data)
             } catch (e: Throwable) {
-                topRatedMovies.postValue(Error(e))
+                _topRatedMovies.postValue(Error(e))
             }
         }
     }

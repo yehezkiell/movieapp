@@ -20,4 +20,14 @@
         tools:spanCount="3"
         tools:listitem="@layout/item_movie_list"/>
 
+    <include
+        layout="@layout/item_loading_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <include
+        layout="@layout/item_error_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

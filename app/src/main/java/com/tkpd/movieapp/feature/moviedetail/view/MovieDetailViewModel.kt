@@ -19,6 +19,10 @@ class MovieDetailViewModel(private val movieDetailRepository: MovieDetailReposit
     val movieDetail: LiveData<Result<MovieDetail?>>
         get() = _movieDetail
 
+    init {
+        _movieDetail.value = Result.Loading
+    }
+
     fun getMovieList(movieId: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             try {

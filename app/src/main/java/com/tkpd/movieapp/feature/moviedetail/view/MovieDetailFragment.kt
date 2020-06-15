@@ -15,14 +15,14 @@ import com.tkpd.movieapp.model.MovieDetail
 import com.tkpd.movieapp.util.*
 import kotlinx.android.synthetic.main.fragment_movie_detail.*
 import kotlinx.android.synthetic.main.item_error_view.*
+import kotlinx.android.synthetic.main.item_loading_view.*
 
 /**
  * Created by Yehezkiel on 29/05/20
  */
 class MovieDetailFragment : Fragment() {
 
-    private val viewModelFactory =
-        MovieDetailViewModelFactory()
+    private val viewModelFactory = MovieDetailViewModelFactory()
     private val viewModel: MovieDetailViewModel by viewModels(factoryProducer = { viewModelFactory })
     private var movieId: Int? = null
 
@@ -63,12 +63,11 @@ class MovieDetailFragment : Fragment() {
                 renderView(it.data ?: MovieDetail())
             }, {
                 error_view.show()
-            })
-            hideLoading()
+            }, ::showLoading, ::hideLoading)
         })
     }
 
-    private fun renderView(data: MovieDetail){
+    private fun renderView(data: MovieDetail) {
         img_banner.loadImage(data.backdropPath)
         img_movie.loadImageRounded(data.posterPath)
         movie_detail_title.text = data.title
@@ -79,10 +78,12 @@ class MovieDetailFragment : Fragment() {
     }
 
     private fun showLoading() {
+        error_view.hide()
         progress_bar_container.show()
     }
 
     private fun hideLoading() {
+        error_view.hide()
         progress_bar_container.hide()
     }
 }

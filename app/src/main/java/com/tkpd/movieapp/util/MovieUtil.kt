@@ -15,14 +15,21 @@ import retrofit2.Response
 
 fun <T : Any?> Result<T?>.doSuccessOrFail(
     success: (Result.Success<T?>) -> Unit,
-    fail: (Throwable) -> Unit
+    fail: (Throwable) -> Unit,
+    loading: () -> Unit,
+    hideLoading : () -> Unit
 ) {
     when (this) {
         is Result.Success -> {
+            hideLoading.invoke()
             success.invoke(this)
         }
         is Result.Error -> {
+            hideLoading.invoke()
             fail.invoke(this.throwable)
+        }
+        is Result.Loading -> {
+            loading.invoke()
         }
     }
 }

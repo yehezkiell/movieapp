@@ -8,14 +8,17 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.tkpd.movieapp.R
 import com.tkpd.movieapp.feature.moviedetail.MovieDetailActivity
+import com.tkpd.movieapp.feature.movielist.MovieListViewModelFactory
 import com.tkpd.movieapp.feature.movielist.adapter.MovieAdapter
 import com.tkpd.movieapp.model.MovieItem
-import com.tkpd.movieapp.feature.movielist.MovieListViewModelFactory
 import com.tkpd.movieapp.util.doSuccessOrFail
+import com.tkpd.movieapp.util.hide
+import com.tkpd.movieapp.util.show
 import kotlinx.android.synthetic.main.fragment_movie_list.*
+import kotlinx.android.synthetic.main.item_error_view.*
+import kotlinx.android.synthetic.main.item_loading_view.*
 
 /**
  * Created by Yehezkiel on 17/05/20
@@ -58,7 +61,7 @@ class MovieListFragment : Fragment(), MovieListListener {
                 adapter.setMovieList(dummyData)
             }, {
 
-            })
+            }, ::showLoading, ::hideLoading)
         })
     }
 
@@ -66,4 +69,14 @@ class MovieListFragment : Fragment(), MovieListListener {
         val intent = MovieDetailActivity.createIntent(requireContext(), id)
         startActivity(intent)
     }
- }
+
+    private fun showLoading() {
+        error_view.hide()
+        progress_bar_container.show()
+    }
+
+    private fun hideLoading() {
+        error_view.hide()
+        progress_bar_container.hide()
+    }
+}
