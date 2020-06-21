@@ -7,6 +7,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.tkpd.movieapp.R
 import com.tkpd.movieapp.constant.MovieConstant.MOVIE_ORIGINAL_IMAGE
+import com.tkpd.movieapp.model.MovieItem
 import retrofit2.Response
 
 /**
@@ -33,6 +34,14 @@ suspend fun <T : Any> stateCall(call: suspend () -> Response<T>): Result<T> {
     } else {
         Result.Error(Throwable(call.invoke().message()))
     }
+}
+
+fun getDummyList(): List<MovieItem> {
+    return listOf(
+        MovieItem(title = "Dummy Title 1", posterPath = "/4FAA18ZIja70d1Tu5hr5cj2q1sB.jpg"),
+        MovieItem(title = "Dummy Title 2", posterPath = "/4FAA18ZIja70d1Tu5hr5cj2q1sB.jpg"),
+        MovieItem(title = "Dummy Title 3", posterPath = "/4FAA18ZIja70d1Tu5hr5cj2q1sB.jpg")
+    )
 }
 
 fun String.createImageUrl(): String {
