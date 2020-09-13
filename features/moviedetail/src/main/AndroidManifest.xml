@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.tkpd.moviedetail">
+    <uses-permission android:name="android.permission.INTERNET" />
+
+
+    <application>
+        <activity
+            android:name=".MovieDetailActivity"
+            android:label="@string/label_movie_detail"
+            android:theme="@style/AppTheme.NoActionBar">
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <!-- Accepts URIs that begin with "http://www.nbageek.com/team” -->
+                <data
+                    android:host="movieapp"
+                    android:pathPattern="/moviedetail/.*"
+                    android:scheme="tkpd" />
+            </intent-filter>
+
+        </activity>
+    </application>
+
+</manifest>

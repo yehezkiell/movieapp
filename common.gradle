@@ -1,4 +1,4 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
@@ -8,7 +8,6 @@ android {
     buildToolsVersion "29.0.2"
 
     defaultConfig {
-        applicationId "com.tkpd.movieapp"
         minSdkVersion 16
         targetSdkVersion 29
         versionCode 1
@@ -40,8 +39,20 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation project(":abstraction")
-    implementation project(":features:moviedetail")
-    implementation project(":features:movielist")
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "androidx.appcompat:appcompat:$app_compat_version"
+    implementation "androidx.core:core-ktx:$kotlin_ktx_core_version"
+    implementation "com.google.android.material:material:$support_version"
+    implementation "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
+    implementation "androidx.navigation:navigation-fragment-ktx:$fragment_ktx_version"
+    implementation "androidx.recyclerview:recyclerview:$recyclerview_version"
+
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-livedata:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
+    kapt "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
+
+    testImplementation 'junit:junit:4.12'
 }

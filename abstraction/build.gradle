@@ -1,4 +1,4 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
@@ -8,7 +8,6 @@ android {
     buildToolsVersion "29.0.2"
 
     defaultConfig {
-        applicationId "com.tkpd.movieapp"
         minSdkVersion 16
         targetSdkVersion 29
         versionCode 1
@@ -24,10 +23,6 @@ android {
         }
     }
 
-// To inline the bytecode built with JVM target 1.8 into
-// bytecode that is being built with JVM target 1.6. (e.g. navArgs)
-
-
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -39,9 +34,13 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    api("com.squareup.retrofit2:retrofit:$retrofit_version")
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation project(":abstraction")
-    implementation project(":features:moviedetail")
-    implementation project(":features:movielist")
+
+    implementation "com.squareup.retrofit2:converter-gson:2.8.0"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
+    implementation "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
+
+    implementation "com.github.bumptech.glide:glide:$glide_version"
+    kapt "com.github.bumptech.glide:compiler:$glide_version"
 }

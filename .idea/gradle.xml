@@ -10,7 +10,11 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/abstraction" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/features" />
+            <option value="$PROJECT_DIR$/features/moviedetail" />
+            <option value="$PROJECT_DIR$/features/movielist" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
