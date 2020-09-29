@@ -14,4 +14,10 @@ object MovieConstant {
     const val KEY_LANGUAGE = "language"
     const val KEY_PAGE = "page"
     const val KEY_MOVIE_ID = "movie_id"
+
+    const val DARK_MODE_PREF = "dark_mode"
+    const val DARK_MODE_KEY = "dark_mode_key"
+
+    const val DARK_VALUE = "Dark"
+    const val LIGHT_VALUE = "Light"
 }
