@@ -41,6 +41,10 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "androidx.appcompat:appcompat:$app_compat_version"
+    implementation "androidx.core:core-ktx:$kotlin_ktx_core_version"
+    implementation "com.google.android.material:material:$support_version"
+
     implementation project(":abstraction")
     implementation project(":features:moviedetail")
     implementation project(":features:movielist")
