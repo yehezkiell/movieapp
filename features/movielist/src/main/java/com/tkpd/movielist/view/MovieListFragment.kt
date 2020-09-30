@@ -1,14 +1,17 @@
 package com.tkpd.movielist.view
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.tkpd.abstraction.data.MovieItem
 import com.tkpd.abstraction.extension.doSuccessOrFail
@@ -16,10 +19,12 @@ import com.tkpd.abstraction.extension.hide
 import com.tkpd.abstraction.extension.show
 import com.tkpd.abstraction.util.getErrorLayout
 import com.tkpd.abstraction.util.getLoadingLayout
-import com.tkpd.movielist.MovieListViewModelFactory
 import com.tkpd.movielist.R
+import com.tkpd.movielist.SharedPreferenceManager
 import com.tkpd.movielist.adapter.MovieAdapter
+import com.tkpd.movielist.di.MovieListProvider
 import kotlinx.android.synthetic.main.fragment_movie_list.*
+import javax.inject.Inject
 
 
 /**
@@ -27,13 +32,22 @@ import kotlinx.android.synthetic.main.fragment_movie_list.*
  */
 class MovieListFragment : Fragment(), MovieListListener {
 
-    private val viewModelFactory =
-        MovieListViewModelFactory()
-    private val viewModel: MovieListViewModel by viewModels(factoryProducer = { viewModelFactory })
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+    private val viewModel by viewModels<MovieListViewModel> { viewModelFactory }
+
+    @Inject
+    lateinit var sharedPref:SharedPreferenceManager
+
     private val adapter: MovieAdapter by lazy {
         MovieAdapter(this)
     }
     private var dummyData: MutableList<MovieItem>? = null
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        (activity?.applicationContext as MovieListProvider).provideMovieListComponent().inject(this)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -45,6 +59,7 @@ class MovieListFragment : Fragment(), MovieListListener {
     @ExperimentalStdlibApi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        sharedPref.editPref("asd","provide application context success")
         initRecyclerView()
         viewModel.getMovieList()
     }
@@ -59,6 +74,7 @@ class MovieListFragment : Fragment(), MovieListListener {
 
         viewModel.topRatedMovies.observe(viewLifecycleOwner, Observer { data ->
             data.doSuccessOrFail({
+                Log.e("daggercontext", "value " + sharedPref.getSharedPref("asd"))
                 dummyData = it.data?.movieItems?.toMutableList()
                 adapter.setMovieList(dummyData)
             }, {

@@ -1,5 +1,6 @@
 package com.tkpd.moviedetail.view
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,22 +8,26 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.tkpd.abstraction.constant.MovieConstant
 import com.tkpd.abstraction.extension.*
-import com.tkpd.moviedetail.MovieDetailViewModelFactory
 import com.tkpd.moviedetail.R
 import com.tkpd.abstraction.data.MovieDetail
 import com.tkpd.abstraction.util.getErrorLayout
 import com.tkpd.abstraction.util.getLoadingLayout
+import com.tkpd.moviedetail.di.MovieDetailProvider
 import kotlinx.android.synthetic.main.fragment_movie_detail.*
+import javax.inject.Inject
 
 /**
  * Created by Yehezkiel on 29/05/20
  */
 class MovieDetailFragment : Fragment() {
 
-    private val viewModelFactory = MovieDetailViewModelFactory()
-    private val viewModel: MovieDetailViewModel by viewModels(factoryProducer = { viewModelFactory })
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+    private val viewModel by viewModels<MovieDetailViewModel> { viewModelFactory }
+
     private var movieId: Int? = null
 
     companion object {
@@ -31,6 +36,12 @@ class MovieDetailFragment : Fragment() {
                 putInt(MovieConstant.PARAM_MOVIE_ID, movieId)
             }
         }
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        (activity?.applicationContext as MovieDetailProvider).provideMovieDetailComponent()
+            .inject(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
