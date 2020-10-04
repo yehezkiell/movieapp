@@ -25,10 +25,14 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MovieDetailFragment : Fragment() {
 
+    @Inject
+    lateinit var movieDetailViewModelFactory: MovieDetailViewModel.AssistedFactory
 
-    private val viewModel by viewModels<MovieDetailViewModel>()
+    private val viewModel: MovieDetailViewModel by viewModels {
+        MovieDetailViewModel.provideFactory(movieDetailViewModelFactory, movieId)
+    }
 
-    private var movieId: Int? = null
+    private var movieId: Int = 0
 
     companion object {
         fun getFragment(movieId: Int) = MovieDetailFragment().also {
@@ -41,7 +45,7 @@ class MovieDetailFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            movieId = it.getInt(MovieConstant.PARAM_MOVIE_ID, 0)
+            movieId = it.getInt(PARAM_MOVIE_ID, 0) ?: 0
         }
     }
 
@@ -56,13 +60,12 @@ class MovieDetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         progress_bar_container.show()
         error_view.hide()
-        viewModel.getMovieList(movieId ?: 0)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel.movieDetail.observe(viewLifecycleOwner, Observer { data ->
-            data.doSuccessOrFail({
+            data?.doSuccessOrFail({
                 error_view.hide()
                 renderView(it.data ?: MovieDetail())
             }, {
@@ -72,11 +75,7 @@ class MovieDetailFragment : Fragment() {
         })
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-    }
-
-    private fun renderView(data: MovieDetail){
+    private fun renderView(data: MovieDetail) {
         img_banner.loadImage(data.backdropPath)
         img_movie.loadImageRounded(data.posterPath)
         movie_detail_title.text = data.title
