@@ -1,5 +1,6 @@
 package com.tkpd.moviedetail.view
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -25,6 +26,7 @@ class MovieDetailViewModel @Inject constructor(private val movieDetailRepository
     }
 
     fun getMovieList(movieId: Int) {
+        Log.e("dagger2nya",movieDetailRepository.toString())
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 val data = movieDetailRepository.getMovieDetailFromAPI(movieId)

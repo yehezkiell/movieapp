@@ -10,14 +10,15 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.tkpd.abstraction.constant.MovieConstant
-import com.tkpd.abstraction.extension.*
-import com.tkpd.moviedetail.R
 import com.tkpd.abstraction.data.MovieDetail
+import com.tkpd.abstraction.extension.*
 import com.tkpd.abstraction.util.getErrorLayout
 import com.tkpd.abstraction.util.getLoadingLayout
-import com.tkpd.moviedetail.di.MovieDetailProvider
+import com.tkpd.moviedetail.MovieDetailActivity
+import com.tkpd.moviedetail.R
 import kotlinx.android.synthetic.main.fragment_movie_detail.*
 import javax.inject.Inject
+
 
 /**
  * Created by Yehezkiel on 29/05/20
@@ -39,9 +40,8 @@ class MovieDetailFragment : Fragment() {
     }
 
     override fun onAttach(context: Context) {
+        (activity as MovieDetailActivity).getComponent.inject(this)
         super.onAttach(context)
-        (activity?.applicationContext as MovieDetailProvider).provideMovieDetailComponent()
-            .inject(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -85,6 +85,17 @@ class MovieDetailFragment : Fragment() {
         movie_popularity.text = data.popularity.toString()
         movie_release_date.text = data.releaseDate
         movie_description.text = data.overview
+        img_banner?.setOnClickListener {
+            val fragmentTransaction = activity?.supportFragmentManager?.beginTransaction()
+            fragmentTransaction?.add(
+                    R.id.content_view,
+                    getFragment(
+                        734309
+                    )
+                )
+                ?.commit()
+            fragmentTransaction?.addToBackStack("")
+        }
     }
 
     private fun showLoading() {

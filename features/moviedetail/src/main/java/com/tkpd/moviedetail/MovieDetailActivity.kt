@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.tkpd.abstraction.constant.MovieConstant
+import com.tkpd.moviedetail.di.MovieDetailProvider
 import com.tkpd.moviedetail.view.MovieDetailFragment
 import kotlinx.android.synthetic.main.activity_movie_detail.*
 
@@ -15,12 +16,15 @@ import kotlinx.android.synthetic.main.activity_movie_detail.*
 
 class MovieDetailActivity : AppCompatActivity() {
 
+    val getComponent by lazy {
+        (application as MovieDetailProvider).provideMovieDetailComponent()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_detail)
         setupToolbar()
         setupFragment()
-
     }
 
     override fun onBackPressed() {
@@ -37,7 +41,8 @@ class MovieDetailActivity : AppCompatActivity() {
         val movieId = intent?.data?.lastPathSegment ?: ""
 
         supportFragmentManager.beginTransaction()
-            .replace(R.id.content_view,
+            .replace(
+                R.id.content_view,
                 MovieDetailFragment.getFragment(
                     movieId.toInt()
                 )

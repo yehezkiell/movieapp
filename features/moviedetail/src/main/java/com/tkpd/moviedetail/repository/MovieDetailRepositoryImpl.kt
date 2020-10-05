@@ -5,7 +5,9 @@ import com.tkpd.abstraction.extension.Result
 import com.tkpd.abstraction.extension.stateCall
 import com.tkpd.abstraction.network.MovieAPI
 import com.tkpd.abstraction.network.RetrofitInstanceBuilder
+import com.tkpd.moviedetail.di.MovieDetailScope
 import javax.inject.Inject
+import javax.inject.Singleton
 
 /**
  * Created by Yehezkiel on 29/05/20
