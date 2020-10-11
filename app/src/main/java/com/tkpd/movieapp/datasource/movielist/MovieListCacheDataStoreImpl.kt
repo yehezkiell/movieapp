@@ -1,6 +1,7 @@
 package com.tkpd.movieapp.datasource.movielist
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
 import com.tkpd.movieapp.database.MovieDatabase

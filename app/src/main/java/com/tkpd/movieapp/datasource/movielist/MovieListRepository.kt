@@ -14,6 +14,6 @@ class MovieListRepository(private val remoteDataSource: MovieListRemoteDataSourc
     fun getPopularMovieList(): LiveData<Result<PopularMovies?>> = performDataStrategy(
         databaseQuery = { localDataSourceImpl.getCacheMovieList() },
         networkCall = { remoteDataSource.getMovieListFromAPI() },
-        saveCallResult = { localDataSourceImpl.insertAll(it) }
+        saveToDb = { localDataSourceImpl.insertAll(it) }
     )
 }
