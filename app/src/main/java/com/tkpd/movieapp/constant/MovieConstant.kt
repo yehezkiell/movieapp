@@ -14,4 +14,6 @@ object MovieConstant {
     const val KEY_LANGUAGE = "language"
     const val KEY_PAGE = "page"
     const val KEY_MOVIE_ID = "movie_id"
+
+    const val DATABASE_NAME = "movie_db"
 }

@@ -5,6 +5,8 @@ import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.tkpd.movieapp.R
 import com.tkpd.movieapp.constant.MovieConstant.MOVIE_ORIGINAL_IMAGE
 import retrofit2.Response
@@ -17,7 +19,7 @@ fun <T : Any?> Result<T?>.doSuccessOrFail(
     success: (Result.Success<T?>) -> Unit,
     fail: (Throwable) -> Unit,
     loading: () -> Unit,
-    hideLoading : () -> Unit
+    hideLoading: () -> Unit
 ) {
     when (this) {
         is Result.Success -> {
@@ -69,5 +71,13 @@ fun View.show() {
 
 fun View.hide() {
     this.visibility = View.GONE
+}
+
+inline fun <reified T> String.fromJson() : T {
+    return Gson().fromJson(this, object : TypeToken<T?>() {}.type)
+}
+
+fun <T : Any> T.toJson(): String {
+    return Gson().toJson(this)
 }
 
