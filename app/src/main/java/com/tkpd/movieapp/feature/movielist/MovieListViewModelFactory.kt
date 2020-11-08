@@ -3,9 +3,9 @@ package com.tkpd.movieapp.feature.movielist
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.tkpd.movieapp.datasource.movielist.MovieListCacheDataStoreImpl
-import com.tkpd.movieapp.datasource.movielist.MovieListRemoteDataSourceImpl
-import com.tkpd.movieapp.datasource.movielist.MovieListRepository
+import com.tkpd.movieapp.data.movielist.MovieCacheDataStoreImpl
+import com.tkpd.movieapp.data.movielist.MovieListRemoteDataSourceImpl
+import com.tkpd.movieapp.data.repository.MovieListRepository
 import com.tkpd.movieapp.feature.movielist.view.MovieListViewModel
 
 /**
@@ -17,7 +17,7 @@ class MovieListViewModelFactory(private val context: Context) : ViewModelProvide
         return MovieListViewModel(
             MovieListRepository(
                 MovieListRemoteDataSourceImpl(),
-                MovieListCacheDataStoreImpl(context)
+                MovieCacheDataStoreImpl(context)
             )
         ) as T
     }

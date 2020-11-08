@@ -2,13 +2,11 @@ package com.tkpd.movieapp.feature.moviedetail
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.tkpd.movieapp.R
 import com.tkpd.movieapp.constant.MovieConstant
 import com.tkpd.movieapp.feature.moviedetail.view.MovieDetailFragment
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.toolbar
 import kotlinx.android.synthetic.main.activity_movie_detail.*
 

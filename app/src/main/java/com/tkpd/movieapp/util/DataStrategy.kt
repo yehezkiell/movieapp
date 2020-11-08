@@ -20,9 +20,9 @@ fun <T> performDataStrategy(databaseQuery: () -> LiveData<Result<T?>>,
 
         if (responseStatus is Result.Success) {
             //If the data in local and remote are equal, no need to update the db
-            if ((source.value as Result.Success).data.hashCode() != responseStatus.data.hashCode()) {
+            if ((source.value as? Result.Success)?.data.hashCode() != responseStatus.data.hashCode()) {
                 saveToDb(responseStatus.data)
-                Log.e("asd", "masil")
+                Log.d("cacheMovie", "true")
             }
         } else if (responseStatus is Result.Error) {
             emit(Result.Error(responseStatus.throwable))

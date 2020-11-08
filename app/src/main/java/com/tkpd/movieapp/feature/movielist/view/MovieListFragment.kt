@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.tkpd.movieapp.R
 import com.tkpd.movieapp.feature.moviedetail.MovieDetailActivity
@@ -34,7 +34,7 @@ class MovieListFragment : Fragment(), MovieListListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProviders.of(this, MovieListViewModelFactory(requireContext()))
+        viewModel = ViewModelProvider(this, MovieListViewModelFactory(requireContext()))
             .get(MovieListViewModel::class.java)
 
     }

@@ -8,8 +8,6 @@ data class MovieDetail(
     val adult: Boolean = false,
     @SerializedName("backdrop_path")
     val backdropPath: String = "",
-    @SerializedName("belongs_to_collection")
-    val belongsToCollection: Any = Any(),
     @SerializedName("budget")
     val budget: Float = 0F,
     @SerializedName("genres")
@@ -66,8 +64,6 @@ data class Genre(
 data class ProductionCompany(
     @SerializedName("id")
     val id: Int = 0,
-    @SerializedName("logo_path")
-    val logoPath: Any = Any(),
     @SerializedName("name")
     val name: String = "",
     @SerializedName("origin_country")

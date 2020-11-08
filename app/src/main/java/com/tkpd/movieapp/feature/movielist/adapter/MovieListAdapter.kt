@@ -4,8 +4,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.tkpd.movieapp.feature.movielist.view.MovieListListener
-import com.tkpd.movieapp.model.MovieItem
 import com.tkpd.movieapp.feature.movielist.viewholder.MovieItemViewHolder
+import com.tkpd.movieapp.model.MovieItem
 
 /**
  * Created by Yehezkiel on 17/05/20

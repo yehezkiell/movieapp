@@ -1,4 +1,4 @@
-package com.tkpd.movieapp.datasource.movielist
+package com.tkpd.movieapp.data.movielist
 
 import com.tkpd.movieapp.constant.MovieConstant
 import com.tkpd.movieapp.model.PopularMovies

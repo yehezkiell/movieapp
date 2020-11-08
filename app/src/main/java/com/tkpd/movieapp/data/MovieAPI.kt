@@ -1,4 +1,4 @@
-package com.tkpd.movieapp.datasource
+package com.tkpd.movieapp.data
 
 import com.tkpd.movieapp.constant.MovieConstant
 import com.tkpd.movieapp.model.MovieDetail

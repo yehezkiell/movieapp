@@ -2,7 +2,7 @@ package com.tkpd.movieapp.feature.movielist.view
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.tkpd.movieapp.datasource.movielist.MovieListRepository
+import com.tkpd.movieapp.data.repository.MovieListRepository
 import com.tkpd.movieapp.model.PopularMovies
 import com.tkpd.movieapp.util.Result
 

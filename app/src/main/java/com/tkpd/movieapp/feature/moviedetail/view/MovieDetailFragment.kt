@@ -5,8 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.tkpd.movieapp.R
 import com.tkpd.movieapp.constant.MovieConstant
 import com.tkpd.movieapp.constant.MovieConstant.PARAM_MOVIE_ID
@@ -22,8 +22,7 @@ import kotlinx.android.synthetic.main.item_loading_view.*
  */
 class MovieDetailFragment : Fragment() {
 
-    private val viewModelFactory = MovieDetailViewModelFactory()
-    private val viewModel: MovieDetailViewModel by viewModels(factoryProducer = { viewModelFactory })
+    private var viewModel: MovieDetailViewModel? = null
     private var movieId: Int? = null
 
     companion object {
@@ -39,6 +38,9 @@ class MovieDetailFragment : Fragment() {
         arguments?.let {
             movieId = it.getInt(MovieConstant.PARAM_MOVIE_ID, 0)
         }
+
+        viewModel = ViewModelProvider(this, MovieDetailViewModelFactory(requireActivity().applicationContext))
+            .get(MovieDetailViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -52,12 +54,12 @@ class MovieDetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         showLoading()
         error_view.hide()
-        viewModel.getMovieList(movieId ?: 0)
+        viewModel?.getMovieDetail(movieId ?: 0)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel.movieDetail.observe(viewLifecycleOwner, Observer { data ->
+        viewModel?.movieDetail?.observe(viewLifecycleOwner, Observer { data ->
             data.doSuccessOrFail({
                 error_view.hide()
                 renderView(it.data ?: MovieDetail())

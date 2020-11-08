@@ -5,6 +5,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.tkpd.movieapp.model.MovieDetailEntity
 import com.tkpd.movieapp.model.MovieListEntity
 
 /**
@@ -13,8 +14,14 @@ import com.tkpd.movieapp.model.MovieListEntity
 @Dao
 interface MovieDao {
     @Query("SELECT * FROM movielist")
-    fun getAllCharacters(): LiveData<MovieListEntity?>
+    fun getMovieList(): LiveData<MovieListEntity?>
+
+    @Query("SELECT * FROM movieDetail WHERE movieId=:movieId")
+    fun getMovieDetail(movieId: Int): LiveData<MovieDetailEntity?>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(movieEntity: MovieListEntity)
+    suspend fun insertMovieList(movieEntity: MovieListEntity)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertMovieDetail(movieEntity: MovieDetailEntity)
 }
