@@ -6,4 +6,4 @@
 4. [Hilt Branch](https://github.com/yehezkiell/movieapp/tree/dev_hilt) - [Article](https://medium.com/tokopedia-engineering/migrating-dagger-android-into-hilt-7fd3f6a9e641)
 5. [Multi Module Architecture Branch](https://github.com/yehezkiell/movieapp/tree/dev_multi_module)
 6. [Dark Mode Branch](https://github.com/yehezkiell/movieapp/tree/dev_dark_mode)
-
+7. [Local Cache With Room Branch](https://github.com/yehezkiell/movieapp/tree/dev_room)
