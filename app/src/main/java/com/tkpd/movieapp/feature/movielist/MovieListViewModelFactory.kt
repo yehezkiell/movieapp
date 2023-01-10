@@ -10,7 +10,7 @@ import com.tkpd.movieapp.feature.movielist.view.MovieListViewModel
  */
 class MovieListViewModelFactory : ViewModelProvider.Factory {
 
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return MovieListViewModel(MovieListRepositoryImpl()) as T
     }
 }
