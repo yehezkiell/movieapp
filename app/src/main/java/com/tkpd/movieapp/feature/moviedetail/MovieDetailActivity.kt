@@ -7,6 +7,8 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.tkpd.movieapp.R
 import com.tkpd.movieapp.constant.MovieConstant
+import com.tkpd.movieapp.databinding.ActivityMainBinding
+import com.tkpd.movieapp.databinding.ActivityMovieDetailBinding
 import com.tkpd.movieapp.feature.moviedetail.view.MovieDetailFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.toolbar
@@ -26,10 +28,13 @@ class MovieDetailActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_movie_detail)
+
+        val binding = ActivityMovieDetailBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
+
         setupToolbar()
         setupFragment()
-
     }
 
     override fun onBackPressed() {
