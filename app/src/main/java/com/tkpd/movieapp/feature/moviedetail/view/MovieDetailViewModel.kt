@@ -17,8 +17,8 @@ import kotlinx.coroutines.launch
  */
 class MovieDetailViewModel(private val movieDetailRepository: MovieDetailRepository) : ViewModel() {
 
-    private val _movieDetail = MutableLiveData<Result<MovieDetail>?>()
-    val movieDetail: LiveData<Result<MovieDetail>?>
+    private val _movieDetail = MutableLiveData<MovieDetail?>()
+    val movieDetail: LiveData<MovieDetail?>
         get() = _movieDetail
 
     private val _showError = MutableStateFlow(false)
@@ -37,12 +37,10 @@ class MovieDetailViewModel(private val movieDetailRepository: MovieDetailReposit
                 _showError.emit(false)
                 _showLoading.emit(false)
 
-                _movieDetail.postValue(data)
+                _movieDetail.postValue((data as Result.Success).data)
             } catch (e: Throwable) {
                 _showError.emit(true)
                 _showLoading.emit(false)
-
-                _movieDetail.postValue(Result.Error(e))
             }
         }
     }
