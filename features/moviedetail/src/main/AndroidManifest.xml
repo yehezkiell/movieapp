@@ -8,6 +8,7 @@
         <activity
             android:name=".MovieDetailActivity"
             android:label="@string/label_movie_detail"
+            android:exported="true"
             android:theme="@style/AppTheme.NoActionBar">
 
             <intent-filter>
