@@ -6,6 +6,7 @@
         <activity
             android:name=".MovieListActivity"
             android:label="@string/movielist"
+            android:exported="true"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

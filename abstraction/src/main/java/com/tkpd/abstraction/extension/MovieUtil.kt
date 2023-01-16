@@ -42,7 +42,8 @@ suspend fun <T : Any> stateCall(call: suspend () -> Response<T>): Result<T> {
     }
 }
 
-fun String.createImageUrl(): String {
+fun String?.createImageUrl(): String {
+    if (this == null) return ""
     return MOVIE_ORIGINAL_IMAGE + this
 }
 
