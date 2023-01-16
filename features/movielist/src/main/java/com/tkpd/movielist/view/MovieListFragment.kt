@@ -8,15 +8,21 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.tkpd.abstraction.data.MovieItem
+import com.tkpd.abstraction.extension.Result
 import com.tkpd.abstraction.extension.doSuccessOrFail
 import com.tkpd.abstraction.extension.hide
 import com.tkpd.abstraction.extension.show
+import com.tkpd.abstraction.util.ComposeUtil
 import com.tkpd.abstraction.util.getErrorLayout
 import com.tkpd.abstraction.util.getLoadingLayout
 import com.tkpd.movielist.R
@@ -30,19 +36,14 @@ import javax.inject.Inject
 /**
  * Created by Yehezkiel on 17/05/20
  */
-class MovieListFragment : Fragment(), MovieListListener {
+class MovieListFragment : Fragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
     private val viewModel by viewModels<MovieListViewModel> { viewModelFactory }
 
     @Inject
-    lateinit var sharedPref:SharedPreferenceManager
-
-    private val adapter: MovieAdapter by lazy {
-        MovieAdapter(this)
-    }
-    private var dummyData: MutableList<MovieItem>? = null
+    lateinit var sharedPref: SharedPreferenceManager
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -51,55 +52,47 @@ class MovieListFragment : Fragment(), MovieListListener {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_movie_list, container, false)
+    ): View {
+        return ComposeView(requireContext()).apply {
+            setContent {
+                MovieListMainView(viewModel)
+            }
+        }
     }
 
     @ExperimentalStdlibApi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        sharedPref.editPref("asd","provide application context success")
-        initRecyclerView()
         viewModel.getMovieList()
     }
 
-    private fun initRecyclerView() {
-        rv_movie_list.layoutManager = GridLayoutManager(context, 3)
-        rv_movie_list.adapter = adapter
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-        viewModel.topRatedMovies.observe(viewLifecycleOwner, Observer { data ->
-            data.doSuccessOrFail({
-                Log.e("daggercontext", "value " + sharedPref.getSharedPref("asd"))
-                dummyData = it.data?.movieItems?.toMutableList()
-                adapter.setMovieList(dummyData)
-            }, {
-
-            }, ::showLoading, ::hideLoading)
-        })
-    }
-
-    override fun onClick(id: Int) {
+    private fun goToMovieDetail(id: String) {
         val url = Uri.parse("tkpd://movieapp/moviedetail").buildUpon().apply {
-            appendPath(id.toString())
+            appendPath(id)
         }.build().toString()
         val intent = Intent(Intent.ACTION_VIEW)
         intent.data = Uri.parse(url)
-//        val intent = com.tkpd.moviedetail.MovieDetailActivity.createIntent(requireContext(), id)
         startActivity(intent)
     }
 
-    private fun showLoading() {
-        getErrorLayout.hide()
-        getLoadingLayout.show()
-    }
+    @Composable
+    fun MovieListMainView(viewModel: MovieListViewModel) {
+        val movieList by viewModel.topRatedMovies.observeAsState()
 
-    private fun hideLoading() {
-        getErrorLayout.hide()
-        getLoadingLayout.hide()
+        when (movieList) {
+            is Result.Success -> {
+                MovieListLayout().MovieGridLayout(
+                    movies = (movieList as Result.Success).data!!.movieItems,
+                    onItemClick = {
+                        goToMovieDetail(it)
+                    })
+            }
+            is Result.Loading -> {
+                ComposeUtil.LoadingView()
+            }
+            else -> {
+                ComposeUtil.ErrorView()
+            }
+        }
     }
 }

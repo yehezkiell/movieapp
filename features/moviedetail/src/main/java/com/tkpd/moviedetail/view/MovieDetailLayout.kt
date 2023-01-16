@@ -8,7 +8,6 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -22,6 +21,7 @@ import androidx.constraintlayout.compose.Dimension
 import coil.compose.rememberAsyncImagePainter
 import com.tkpd.abstraction.data.MovieDetail
 import com.tkpd.abstraction.extension.createImageUrl
+import com.tkpd.abstraction.util.ComposeUtil.ImageBuilder
 import com.tkpd.moviedetail.R
 
 class MovieDetailLayout {
@@ -40,13 +40,7 @@ class MovieDetailLayout {
 
             val barrierHeader = createBottomBarrier(mainImage, additionalSectionRow)
 
-            Image(
-                painter = debugPlaceholder(
-                    debugPreview = R.drawable.ic_broken_image_black_24dp,
-                    productionImageUrl = movieDetail.backdropPath.createImageUrl()
-                ),
-                contentDescription = "",
-                contentScale = ContentScale.FillBounds,
+            ImageBuilder(
                 modifier = Modifier.constrainAs(bannerImage) {
                     top.linkTo(parent.top)
                     start.linkTo(parent.start)
@@ -54,19 +48,16 @@ class MovieDetailLayout {
                     bottom.linkTo(topGuideline40)
                     height = Dimension.fillToConstraints
                     width = Dimension.fillToConstraints
-                })
+                },
+                url = movieDetail.backdropPath.createImageUrl()
+            )
 
-            Image(
-                painter = debugPlaceholder(
-                    debugPreview = R.drawable.ic_broken_image_black_24dp,
-                    productionImageUrl = movieDetail.posterPath.createImageUrl()
-                ),
-                contentDescription = "",
-                contentScale = ContentScale.FillBounds,
+            ImageBuilder(
                 modifier = Modifier.height(200.dp).aspectRatio(2f / 3f).constrainAs(mainImage) {
                     top.linkTo(topGuideline30)
                     start.linkTo(parent.start, 16.dp)
-                }
+                },
+                url = movieDetail.posterPath.createImageUrl()
             )
 
             Text(
@@ -194,7 +185,7 @@ class MovieDetailLayout {
     @Composable
     private fun MainViewPreview() {
         Surface {
-            MovieDetailContent(MovieDetail())
+//            MovieListItem()
             //            AdditionalSectionRow()
             //            AdditionalSectionRow()
         }
