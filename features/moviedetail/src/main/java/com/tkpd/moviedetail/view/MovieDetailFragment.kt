@@ -1,32 +1,18 @@
 package com.tkpd.moviedetail.view
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.tkpd.abstraction.constant.MovieConstant.PARAM_MOVIE_ID
-import com.tkpd.moviedetail.R
+import com.tkpd.abstraction.util.ComposeUtil
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -35,8 +21,6 @@ import dagger.hilt.android.AndroidEntryPoint
  */
 @AndroidEntryPoint
 class MovieDetailFragment : Fragment() {
-
-    private val viewModel by viewModels<MovieDetailViewModel>()
 
     private var movieId: Int? = null
 
@@ -60,15 +44,9 @@ class MovieDetailFragment : Fragment() {
     ): View {
         return ComposeView(requireContext()).apply {
             setContent {
-                MovieDetailMainLayout(viewModel)
+                MovieDetailMainLayout()
             }
         }
-    }
-
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        viewModel.getMovieList(movieId ?: 0)
     }
 
     @Composable
@@ -77,57 +55,14 @@ class MovieDetailFragment : Fragment() {
         val showLoading by viewModel.showLoading.collectAsState()
         val movieDetail by viewModel.movieDetail.observeAsState()
 
+        viewModel.getMovieList(movieId!!)
+
         if (showError) {
-            ErrorContent()
+            ComposeUtil.ErrorView()
         } else if (showLoading || movieDetail == null) {
-            ProgressBar()
+            ComposeUtil.LoadingView()
         } else {
             MovieDetailLayout().MovieDetailContent(movieDetail!!)
         }
-    }
-
-    @Composable
-    fun ErrorContent() {
-        Surface {
-            Column(
-                modifier = Modifier.fillMaxWidth().fillMaxHeight(),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Image(
-                    painter = painterResource(R.drawable.ic_error_black_24dp),
-                    contentDescription = "Content description for visually impaired",
-                    alignment = Alignment.Center
-                )
-
-                Text(
-                    text = stringResource(R.string.label_error),
-                    modifier = Modifier
-                        .padding(vertical = 8.dp, horizontal = 100.dp),
-                    textAlign = TextAlign.Center,
-                )
-            }
-        }
-    }
-
-    @Composable
-    private fun ProgressBar() {
-        Surface {
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                CircularProgressIndicator(
-                    modifier = Modifier.size(100.dp),
-                    strokeWidth = 10.dp
-                )
-            }
-        }
-    }
-
-    @Preview
-    @Composable
-    private fun ErrorContentPreview() {
-        ProgressBar()
     }
 }
