@@ -24,9 +24,10 @@ class MovieListViewModel @Inject constructor(private val movieListRepository: Mo
 
     init {
         _topRatedMovies.value = Result.Loading
+        getMovieList()
     }
 
-    fun getMovieList() {
+    private fun getMovieList() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 val data = movieListRepository.getMovieListFromAPI()

@@ -63,7 +63,6 @@ class MovieListFragment : Fragment() {
     @ExperimentalStdlibApi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.getMovieList()
     }
 
     private fun goToMovieDetail(id: String) {
