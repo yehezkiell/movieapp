@@ -11,11 +11,13 @@ import com.tkpd.abstraction.extension.Result
 import com.tkpd.abstraction.data.PopularMovies
 import com.tkpd.movielist.repository.MovieListRepository
 import com.tkpd.movielist.repository.MovieListRepositoryImpl
+import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 /**
  * Created by Yehezkiel on 10/05/20
  */
+@HiltViewModel
 class MovieListViewModel @Inject constructor(private val movieListRepository: MovieListRepository) : ViewModel() {
 
     private val _topRatedMovies = MutableLiveData<Result<PopularMovies?>>()

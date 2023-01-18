@@ -6,13 +6,14 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.tkpd.abstraction.constant.MovieConstant
 import com.tkpd.moviedetail.view.MovieDetailFragment
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_movie_detail.*
 
 /**
  * Created by Yehezkiel on 29/05/20
  * deeplink : tkpd://movieapp/moviedetail/{movie_id}
  */
-
+@AndroidEntryPoint
 class MovieDetailActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -9,6 +9,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import com.tkpd.abstraction.extension.Result
 import com.tkpd.moviedetail.repository.MovieDetailRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
@@ -16,6 +17,7 @@ import javax.inject.Inject
 /**
  * Created by Yehezkiel on 29/05/20
  */
+@HiltViewModel
 class MovieDetailViewModel @Inject constructor(
     private val movieDetailRepository: MovieDetailRepository) : ViewModel() {
 

@@ -24,22 +24,19 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.tkpd.abstraction.constant.MovieConstant.PARAM_MOVIE_ID
 import com.tkpd.moviedetail.R
-import com.tkpd.moviedetail.di.MovieDetailProvider
-import javax.inject.Inject
+import dagger.hilt.android.AndroidEntryPoint
 
 
 /**
  * Created by Yehezkiel on 29/05/20
  */
+@AndroidEntryPoint
 class MovieDetailFragment : Fragment() {
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-    private val viewModel by viewModels<MovieDetailViewModel> { viewModelFactory }
+    private val viewModel by viewModels<MovieDetailViewModel>()
 
     private var movieId: Int? = null
 
@@ -49,12 +46,6 @@ class MovieDetailFragment : Fragment() {
                 putInt(PARAM_MOVIE_ID, movieId)
             }
         }
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        (activity?.applicationContext as MovieDetailProvider).provideMovieDetailComponent()
-            .inject(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

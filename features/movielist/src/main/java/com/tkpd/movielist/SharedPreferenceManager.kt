@@ -1,13 +1,13 @@
 package com.tkpd.movielist
 
 import android.content.Context
-import com.tkpd.abstraction.di.ApplicationScope
 import com.tkpd.movielist.view.MovieListFragment
+import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
 // This class only for testing purpose
 // Make sure module get Application Context from Application
-class SharedPreferenceManager @Inject constructor(@ApplicationScope val context: Context) {
+class SharedPreferenceManager @Inject constructor(@ApplicationContext val context: Context) {
     fun getSharedPref(key: String): String {
         val pref =
             context.getSharedPreferences(MovieListFragment::class.simpleName, Context.MODE_PRIVATE)
