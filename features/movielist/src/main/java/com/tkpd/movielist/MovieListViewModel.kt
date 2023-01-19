@@ -4,8 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.movieapp.MovieListDirections
-import com.movieapp.NavigationManager
+import com.movieapp.ApplinkConst
 import com.movieapp.Navigator
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -13,7 +12,6 @@ import com.tkpd.abstraction.extension.Result.Error
 import com.tkpd.abstraction.extension.Result
 import com.tkpd.abstraction.data.PopularMovies
 import com.tkpd.movielist.repository.MovieListRepository
-import com.tkpd.movielist.repository.MovieListRepositoryImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -36,7 +34,9 @@ class MovieListViewModel @Inject constructor(private val movieListRepository: Mo
     }
 
     fun onMovieClicked(movieId: String) {
-        navigator.navController.navigate(MovieListDirections.root.destination)
+        navigator.route(ApplinkConst.MOVIE_DETAIL_PATH, movieId, builder = {
+            //noop
+        })
     }
 
     private fun getMovieList() {

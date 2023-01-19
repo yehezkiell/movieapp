@@ -3,17 +3,12 @@ package tkpd.application
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.runtime.collectAsState
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.movieapp.MovieDetailDirections
-import com.movieapp.MovieListDirections
-import com.movieapp.NavigationManager
 import com.movieapp.Navigator
 import com.tkpd.movieapp.R
-import com.tkpd.moviedetail.MovieDetailUI
-import com.tkpd.movielist.MovieListMainView
+import com.tkpd.moviedetail.MovieDetailDirections
+import com.tkpd.movielist.MovieListDirections
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -35,12 +30,8 @@ class MainActivity : ComponentActivity() {
                 navController = navigator.navController,
                 startDestination = MovieListDirections.root.destination
             ) {
-                composable(MovieListDirections.root.destination) {
-                    MovieListMainView()
-                }
-                composable(MovieDetailDirections.root.destination) {
-                    MovieDetailUI()
-                }
+                MovieListDirections.root.screen(this)
+                MovieDetailDirections.root.screen(this)
             }
         }
     }
