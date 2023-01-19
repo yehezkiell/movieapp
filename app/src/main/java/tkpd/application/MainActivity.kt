@@ -21,9 +21,6 @@ import javax.inject.Inject
 class MainActivity : ComponentActivity() {
 
     @Inject
-    lateinit var navigationManager: NavigationManager
-
-    @Inject
     lateinit var navigator: Navigator
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,16 +31,8 @@ class MainActivity : ComponentActivity() {
             val navController = rememberNavController()
             navigator.setController(navController)
 
-            navigationManager.commands.collectAsState().value.also { command ->
-                if (command.destination.isNotEmpty()) {
-                    navigator.navController.navigate(command.destination) {
-
-                    }
-                }
-            }
-
             NavHost(
-                navController = navController,
+                navController = navigator.navController,
                 startDestination = MovieListDirections.root.destination
             ) {
                 composable(MovieListDirections.root.destination) {
