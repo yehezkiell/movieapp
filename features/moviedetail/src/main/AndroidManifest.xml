@@ -3,26 +3,4 @@
     package="com.tkpd.moviedetail">
     <uses-permission android:name="android.permission.INTERNET" />
 
-
-    <application>
-        <activity
-            android:name=".MovieDetailActivity"
-            android:label="@string/label_movie_detail"
-            android:exported="true"
-            android:theme="@style/AppTheme.NoActionBar">
-
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                <!-- Accepts URIs that begin with "http://www.nbageek.com/team” -->
-                <data
-                    android:host="movieapp"
-                    android:pathPattern="/moviedetail/.*"
-                    android:scheme="tkpd" />
-            </intent-filter>
-
-        </activity>
-    </application>
-
 </manifest>

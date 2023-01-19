@@ -2,18 +2,4 @@
     package="com.tkpd.movielist">
     <uses-permission android:name="android.permission.INTERNET" />
 
-    <application>
-        <activity
-            android:name=".MovieListActivity"
-            android:label="@string/movielist"
-            android:exported="true"
-            android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-    </application>
-
 </manifest>

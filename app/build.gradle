@@ -7,7 +7,9 @@ dependencies {
 
     implementation "com.squareup.retrofit2:converter-gson:2.8.0"
     implementation "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
+
     implementation project(":abstraction")
+    implementation project(":navigation")
     implementation project(":features:moviedetail")
     implementation project(":features:movielist")
 }
