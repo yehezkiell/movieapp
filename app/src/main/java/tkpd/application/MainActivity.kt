@@ -6,15 +6,11 @@ import androidx.activity.compose.setContent
 import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberScaffoldState
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.movieapp.ApplinkConst
 import com.movieapp.Navigator
-import com.movieapp.generateDestinationArguments
 import com.tkpd.movieapp.R
 import com.tkpd.moviedetail.MovieDetailDirections
 import com.tkpd.movielist.MovieListDirections
-import com.tkpd.movielist.MovieListMainView
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

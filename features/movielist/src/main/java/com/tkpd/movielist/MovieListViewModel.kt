@@ -2,24 +2,20 @@ package com.tkpd.movielist
 
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.movieapp.ApplinkConst
 import com.movieapp.Navigator
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import com.tkpd.abstraction.extension.Result.Error
 import com.tkpd.abstraction.extension.Result
-import com.tkpd.abstraction.data.PopularMovies
 import com.tkpd.movielist.model.MovieListEvent
 import com.tkpd.movielist.model.MovieListState
 import com.tkpd.movielist.repository.MovieListRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Singleton
 

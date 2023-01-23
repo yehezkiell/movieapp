@@ -4,7 +4,6 @@ import com.tkpd.abstraction.data.MovieDetail
 import com.tkpd.abstraction.extension.Result
 import com.tkpd.abstraction.extension.stateCall
 import com.tkpd.abstraction.network.MovieAPI
-import com.tkpd.abstraction.network.RetrofitInstanceBuilder
 import javax.inject.Inject
 
 /**

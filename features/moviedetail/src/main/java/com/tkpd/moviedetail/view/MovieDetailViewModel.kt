@@ -1,18 +1,19 @@
 package com.tkpd.moviedetail.view
 
-import androidx.lifecycle.*
-import com.tkpd.abstraction.data.MovieDetail
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.tkpd.abstraction.extension.Result
 import com.tkpd.moviedetail.MovieDetailDirections
 import com.tkpd.moviedetail.model.MovieDetailEvent
 import com.tkpd.moviedetail.model.MovieDetailState
 import com.tkpd.moviedetail.repository.MovieDetailRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**

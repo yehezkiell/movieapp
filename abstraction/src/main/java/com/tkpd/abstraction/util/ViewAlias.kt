@@ -4,7 +4,6 @@ package com.tkpd.abstraction.util
  * Created by Yehezkiel on 13/09/20
  */
 
-import android.app.Activity
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import androidx.fragment.app.Fragment

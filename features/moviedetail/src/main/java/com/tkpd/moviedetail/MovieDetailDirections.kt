@@ -1,7 +1,10 @@
 package com.tkpd.moviedetail
 
-import androidx.navigation.*
+import androidx.navigation.NamedNavArgument
+import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavType
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import com.movieapp.ApplinkConst
 import com.movieapp.NavigationCommand
 import com.movieapp.getMainPath
