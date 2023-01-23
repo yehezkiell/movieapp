@@ -1,17 +1,18 @@
 package com.tkpd.moviedetail.view
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.tkpd.abstraction.data.MovieDetail
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import com.tkpd.abstraction.extension.Result
+import com.tkpd.moviedetail.MovieDetailDirections
+import com.tkpd.moviedetail.model.MovieDetailEvent
+import com.tkpd.moviedetail.model.MovieDetailState
 import com.tkpd.moviedetail.repository.MovieDetailRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 /**
@@ -19,31 +20,50 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class MovieDetailViewModel @Inject constructor(
-    private val movieDetailRepository: MovieDetailRepository) : ViewModel() {
+    private val movieDetailRepository: MovieDetailRepository,
+    savedStateHandle: SavedStateHandle
+) : ViewModel() {
 
-    private val _movieDetail = MutableLiveData<MovieDetail?>()
-    val movieDetail: LiveData<MovieDetail?>
-        get() = _movieDetail
+    private val argument =
+        checkNotNull(savedStateHandle.get<Int>(MovieDetailDirections.PARAM_MOVIE_ID))
 
-    private val _showError = MutableStateFlow(false)
-    val showError: StateFlow<Boolean>
-        get() = _showError
+    private val _detailData = MutableStateFlow(MovieDetailState())
+    val detailData: StateFlow<MovieDetailState>
+        get() = _detailData
 
-    private val _showLoading = MutableStateFlow(true)
-    val showLoading: StateFlow<Boolean>
-        get() = _showLoading
+    init {
+        getMovieList(argument)
+    }
 
-    fun getMovieList(movieId: Int) {
+    private fun getMovieList(movieId: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 val data = movieDetailRepository.getMovieDetailFromAPI(movieId)
-                _showError.emit(false)
-                _showLoading.emit(false)
+                sentEvent(MovieDetailEvent.Loading)
 
-                _movieDetail.postValue((data as Result.Success).data)
+                sentEvent(MovieDetailEvent.Detail((data as Result.Success).data))
             } catch (e: Throwable) {
-                _showError.emit(true)
-                _showLoading.emit(false)
+                sentEvent(MovieDetailEvent.Error(e))
+            }
+        }
+    }
+
+    private fun sentEvent(event: MovieDetailEvent) {
+        when (event) {
+            is MovieDetailEvent.Loading -> {
+                _detailData.update {
+                    it.copy(isLoading = true, isError = false)
+                }
+            }
+            is MovieDetailEvent.Error -> {
+                _detailData.update {
+                    it.copy(isLoading = false, isError = true)
+                }
+            }
+            is MovieDetailEvent.Detail -> {
+                _detailData.update {
+                    it.copy(isLoading = false, isError = false, detail = event.detail)
+                }
             }
         }
     }

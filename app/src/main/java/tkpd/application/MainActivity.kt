@@ -3,16 +3,18 @@ package tkpd.application
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.BottomNavigation
 import androidx.compose.material.Scaffold
-import androidx.compose.ui.Modifier
+import androidx.compose.material.rememberScaffoldState
 import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.movieapp.ApplinkConst
 import com.movieapp.Navigator
+import com.movieapp.generateDestinationArguments
 import com.tkpd.movieapp.R
 import com.tkpd.moviedetail.MovieDetailDirections
 import com.tkpd.movielist.MovieListDirections
+import com.tkpd.movielist.MovieListMainView
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -28,18 +30,22 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             val navController = rememberNavController()
+            val scaffoldState = rememberScaffoldState()
             navigator.setController(navController)
 
-            Scaffold(bottomBar = {
-                BottomNavBar(navigator.navController)
-            }) { innerPadding ->
+            Scaffold(scaffoldState = scaffoldState,
+                bottomBar = {
+                    BottomNavBar(navController)
+                }) { innerPadding ->
                 NavHost(
-                    navController = navigator.navController,
-                    startDestination = MovieListDirections.root.destination,
-                    modifier = Modifier.padding(innerPadding)
+                    navController = navController,
+                    startDestination = MovieListDirections.destination
                 ) {
-                    MovieListDirections.root.screen(this)
-                    MovieDetailDirections.root.screen(this)
+                    MovieListDirections.screenWithPaddingBottomBar(
+                        this,
+                        innerPadding.calculateBottomPadding()
+                    )
+                    MovieDetailDirections.screen(this)
                 }
             }
         }

@@ -1,4 +1,4 @@
-package com.tkpd.movielist.view
+package com.tkpd.movielist
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -22,10 +22,10 @@ import com.tkpd.abstraction.util.ComposeUtil.ImageBuilder
 class MovieListLayout {
 
     @Composable
-    fun MovieGridLayout(movies: List<MovieItem>, onItemClick: (String) -> Unit) {
+    fun MovieGridLayout(modifier: Modifier, movies: List<MovieItem>, onItemClick: (String) -> Unit) {
         LazyVerticalGrid(
             columns = GridCells.Fixed(3),
-            modifier = Modifier.fillMaxSize(),
+            modifier = modifier.fillMaxSize(),
             contentPadding = PaddingValues(12.dp),
             verticalArrangement = Arrangement.spacedBy(6.dp),
             horizontalArrangement = Arrangement.spacedBy(6.dp)

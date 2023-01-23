@@ -1,25 +1,27 @@
 package com.tkpd.movielist
 
-import androidx.navigation.*
+import androidx.compose.ui.unit.Dp
+import androidx.navigation.NamedNavArgument
+import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.movieapp.ApplinkConst
 import com.movieapp.NavigationCommand
 import com.movieapp.getMainPath
 
-object MovieListDirections {
+object MovieListDirections : NavigationCommand {
 
-    val root = object : NavigationCommand {
+    override val arguments = emptyList<NamedNavArgument>()
 
-        override val arguments = emptyList<NamedNavArgument>()
+    override val mainPath = ApplinkConst.MOVIE_LIST_PATH.getMainPath()
 
-        override val mainPath = ApplinkConst.MOVIE_LIST_PATH.getMainPath()
+    override val destination = ApplinkConst.MOVIE_LIST_PATH
 
-        override val destination = ApplinkConst.MOVIE_LIST_PATH
+    override fun screen(builder: NavGraphBuilder) {
+    }
 
-        override fun screen(builder: NavGraphBuilder) {
-            builder.composable(destination) {
-                MovieListMainView()
-            }
+    fun screenWithPaddingBottomBar(builder: NavGraphBuilder, dp: Dp) {
+        builder.composable(destination) {
+            MovieListMainView(bottomBarHeight = dp)
         }
     }
 }

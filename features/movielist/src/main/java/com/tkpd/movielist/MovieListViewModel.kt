@@ -1,5 +1,7 @@
 package com.tkpd.movielist
 
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,8 +13,13 @@ import kotlinx.coroutines.launch
 import com.tkpd.abstraction.extension.Result.Error
 import com.tkpd.abstraction.extension.Result
 import com.tkpd.abstraction.data.PopularMovies
+import com.tkpd.movielist.model.MovieListEvent
+import com.tkpd.movielist.model.MovieListState
 import com.tkpd.movielist.repository.MovieListRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -24,13 +31,19 @@ class MovieListViewModel @Inject constructor(private val movieListRepository: Mo
                                              @Singleton private val navigator: Navigator) :
         ViewModel() {
 
-    private val _topRatedMovies = MutableLiveData<Result<PopularMovies?>>()
-    val topRatedMovies: LiveData<Result<PopularMovies?>>
-        get() = _topRatedMovies
+    private val _movieList = MutableStateFlow(MovieListState())
+    val movieList: StateFlow<MovieListState>
+        get() = _movieList
 
     init {
-        _topRatedMovies.value = Result.Loading
         getMovieList()
+    }
+
+    fun setPadding(dp: Dp) {
+        if (dp == 0.dp) return
+        _movieList.update {
+            it.copy(bottomPadding = dp)
+        }
     }
 
     fun onMovieClicked(movieId: String) {
@@ -39,13 +52,34 @@ class MovieListViewModel @Inject constructor(private val movieListRepository: Mo
         })
     }
 
+    private fun setEvent(event: MovieListEvent) {
+        when (event) {
+            is MovieListEvent.MovieList -> {
+                _movieList.update {
+                    it.copy(event.movieList, false, false)
+                }
+            }
+            is MovieListEvent.Error -> {
+                _movieList.update {
+                    it.copy(isLoading = false, isError = true)
+                }
+            }
+            is MovieListEvent.Loading -> {
+                _movieList.update {
+                    it.copy(isLoading = true, isError = false)
+                }
+            }
+        }
+    }
+
     private fun getMovieList() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 val data = movieListRepository.getMovieListFromAPI()
-                _topRatedMovies.postValue(data)
+
+                setEvent(MovieListEvent.MovieList((data as Result.Success).data))
             } catch (e: Throwable) {
-                _topRatedMovies.postValue(Error(e))
+                setEvent(MovieListEvent.Error(e))
             }
         }
     }
