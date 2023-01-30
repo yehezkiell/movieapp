@@ -9,12 +9,8 @@ import com.tkpd.moviedetail.view.MovieDetailLayout
 import com.tkpd.moviedetail.view.MovieDetailViewModel
 
 @Composable
-fun MovieDetailUI(movieId: Int, viewModel: MovieDetailViewModel = hiltViewModel()) {
+fun MovieDetailUI(viewModel: MovieDetailViewModel = hiltViewModel()) {
     val detailState by viewModel.detailData.collectAsState()
-
-//    LaunchedEffect(Unit) {
-//        viewModel.getMovieList(movieId)
-//    }
 
     if (detailState.isError) {
         ComposeUtil.ErrorView()

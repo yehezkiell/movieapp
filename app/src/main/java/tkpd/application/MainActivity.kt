@@ -3,11 +3,18 @@ package tkpd.application
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberScaffoldState
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.movieapp.ApplinkConst
 import com.movieapp.Navigator
+import com.movieapp.authentication.LoginScreen
+import com.movieapp.generateDestinationArguments
 import com.tkpd.movieapp.R
 import com.tkpd.moviedetail.MovieDetailDirections
 import com.tkpd.movielist.MovieListDirections
@@ -35,13 +42,22 @@ class MainActivity : ComponentActivity() {
                 }) { innerPadding ->
                 NavHost(
                     navController = navController,
-                    startDestination = MovieListDirections.destination
+                    startDestination = MovieListDirections.destination,
+                    modifier = Modifier.padding(innerPadding)
                 ) {
+                    //movie list screen
                     MovieListDirections.screenWithPaddingBottomBar(
                         this,
-                        innerPadding.calculateBottomPadding()
+                        0.dp
                     )
+
+                    //movie detail screen
                     MovieDetailDirections.screen(this)
+
+                    //login screen
+                    composable("authentication") {
+                        LoginScreen()
+                    }
                 }
             }
         }

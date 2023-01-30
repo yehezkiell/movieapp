@@ -14,6 +14,11 @@ object MovieConstant {
     const val KEY_LANGUAGE = "language"
     const val KEY_PAGE = "page"
     const val KEY_MOVIE_ID = "movie_id"
+
+    const val KEY_USERNAME = "username"
+    const val KEY_PASSWORD = "password"
+    const val KEY_REQUEST_TOKEN = "request_token"
+    const val KEY_SESSION_ID = "session_id"
 }
 
 internal object API_KEY{

@@ -5,26 +5,30 @@ import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import dagger.hilt.EntryPoint
 
-sealed class Screen(val route: String, val resourceId: String) {
-    object Profile : Screen("movieList", "Popular")
-    object FriendsList : Screen("friendslist", "friend list")
+sealed class Screen(val route: String, val resourceId: String, val icon: ImageVector) {
+    object Home : Screen("movieList", "Home", Icons.Filled.Home)
+    object Account : Screen("authentication", "Account", Icons.Filled.AccountBox)
 }
 
 @Composable
 fun BottomNavBar(navController: NavController) {
     val items = listOf(
-        Screen.Profile,
-        Screen.FriendsList,
+        Screen.Home,
+        Screen.Account
     )
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
@@ -36,7 +40,7 @@ fun BottomNavBar(navController: NavController) {
             items.forEach { item ->
                 BottomNavigationItem(icon = {
                     Icon(
-                        Icons.Filled.Favorite,
+                        item.icon,
                         contentDescription = null
                     )
                 },
@@ -50,6 +54,7 @@ fun BottomNavBar(navController: NavController) {
 
                             navController.graph.startDestinationRoute?.let { screen_route ->
                                 popUpTo(screen_route) {
+                                    inclusive = true
                                     saveState = true
                                 }
                             }

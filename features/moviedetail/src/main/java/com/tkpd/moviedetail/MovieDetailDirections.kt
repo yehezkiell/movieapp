@@ -25,7 +25,7 @@ object MovieDetailDirections : NavigationCommand {
                 type = NavType.IntType
             })
         ) { backStackEntry ->
-            MovieDetailUI(backStackEntry.arguments?.getInt(PARAM_MOVIE_ID, 0) ?: 0)
+            MovieDetailUI()
         }
     }
 }
