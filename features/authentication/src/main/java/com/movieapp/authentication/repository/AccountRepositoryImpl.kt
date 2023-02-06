@@ -1,22 +1,27 @@
 package com.movieapp.authentication.repository
 
+import com.google.gson.Gson
 import com.tkpd.abstraction.data.account.AccountDetail
 import com.tkpd.abstraction.data.account.SessionData
 import com.tkpd.abstraction.data.account.SessionRequestToken
 import com.tkpd.abstraction.extension.Result
-import com.tkpd.abstraction.extension.stateCall
+import com.tkpd.abstraction.extension.getData
 import com.tkpd.abstraction.network.MovieAPI
 import javax.inject.Inject
 
 
-class AccountRepositoryImpl @Inject constructor(private val movieAPI: MovieAPI) :
-    AccountRepository {
+class AccountRepositoryImpl @Inject constructor(
+    private val movieAPI: MovieAPI,
+    private val gson: Gson
+) : AccountRepository {
 
     override suspend fun createNewToken(): Result<SessionRequestToken> {
-        val data = movieAPI.requestNewToken()
-        return stateCall {
-            data
-        }
+        return getData(
+            gson, apiCall = {
+                movieAPI.requestNewToken()
+            },
+            SessionRequestToken::class.java
+        )
     }
 
     override suspend fun createRequestTokenWithLogin(
@@ -24,23 +29,29 @@ class AccountRepositoryImpl @Inject constructor(private val movieAPI: MovieAPI) 
         password: String,
         requestToken: String
     ): Result<SessionRequestToken> {
-        val data = movieAPI.createRequestTokenWithLogin(username, password, requestToken)
-        return stateCall {
-            data
-        }
+        return getData(
+            gson, apiCall = {
+                movieAPI.createRequestTokenWithLogin(username, password, requestToken)
+            },
+            SessionRequestToken::class.java
+        )
     }
 
     override suspend fun createSessionWithToken(requestToken: String): Result<SessionData> {
-        val data = movieAPI.createSessionWithRequestToken(requestToken)
-        return stateCall {
-            data
-        }
+        return getData(
+            gson, apiCall = {
+                movieAPI.createSessionWithRequestToken(requestToken)
+            },
+            SessionData::class.java
+        )
     }
 
     override suspend fun getDetailAccount(sessionId: String): Result<AccountDetail> {
-        val data = movieAPI.getDetailAccount(sessionId)
-        return stateCall {
-            data
-        }
+        return getData(
+            gson, apiCall = {
+                movieAPI.getDetailAccount(sessionId)
+            },
+            AccountDetail::class.java
+        )
     }
 }

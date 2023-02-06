@@ -37,14 +37,6 @@ fun <T : Any?> Result<T?>.doSuccessOrFail(
     }
 }
 
-suspend fun <T : Any> stateCall(call: suspend () -> Response<T>): Result<T> {
-    return if (call.invoke().isSuccessful) {
-        Result.Success(call.invoke().body()!!)
-    } else {
-        Result.Error(Throwable(call.invoke().message()))
-    }
-}
-
 suspend fun <T> getData(
     gson: Gson,
     apiCall: suspend () -> Response<JsonObject>,
@@ -61,21 +53,15 @@ suspend fun <T> getData(
 private fun <T, K> Response<T>.toResult(gson: Gson, type: Class<K>): Result<K> {
     return if (isSuccessful) {
         val rawString = body().toString()
-        val jsonObject = rawString.toJsonObject()
-        //If there is no success field, it means the data successfully fetched
-        val isSuccess = jsonObject.optBoolean("success", true)
-
-        if (isSuccess) {
-            return Result.Success(gson.fromJson(rawString, type))
-        } else {
-            val statusMessage = jsonObject.optString(
-                "status_message",
-                "Connection Error"
-            )
-            Result.Error(Throwable(statusMessage))
-        }
+        return Result.Success(gson.fromJson(rawString, type))
     } else {
-        Result.Error(Throwable(message()))
+        val jsonObject = errorBody()?.string()?.toJsonObject()
+        val statusMessage = jsonObject?.optString(
+            "status_message",
+            "Connection Error"
+        ) ?: "Connection Error"
+
+        Result.Error(Throwable(statusMessage))
     }
 }
 

@@ -25,26 +25,26 @@ interface MovieAPI {
     ): Response<JsonObject>
 
     @GET("movie/{movie_id}")
-    suspend fun getMovieDetail(@Path(MovieConstant.KEY_MOVIE_ID) movieId: Int): Response<MovieDetail>
+    suspend fun getMovieDetail(@Path(MovieConstant.KEY_MOVIE_ID) movieId: Int): Response<JsonObject>
 
     @GET("/3/authentication/token/new")
-    suspend fun requestNewToken(): Response<SessionRequestToken>
+    suspend fun requestNewToken(): Response<JsonObject>
 
     @POST("/3/authentication/token/validate_with_login")
     suspend fun createRequestTokenWithLogin(
         @Query(MovieConstant.KEY_USERNAME) userName: String,
         @Query(MovieConstant.KEY_PASSWORD) password: String,
         @Query(MovieConstant.KEY_REQUEST_TOKEN) requestToken: String
-    ): Response<SessionRequestToken>
+    ): Response<JsonObject>
 
     @POST("/3/authentication/session/new")
     suspend fun createSessionWithRequestToken(
         @Query(MovieConstant.KEY_REQUEST_TOKEN) requestToken: String
-    ): Response<SessionData>
+    ): Response<JsonObject>
 
     @GET("/3/account")
     suspend fun getDetailAccount(
         @Query(MovieConstant.KEY_SESSION_ID) sessionId: String
-    ): Response<AccountDetail>
+    ): Response<JsonObject>
 
 }

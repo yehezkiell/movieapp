@@ -7,7 +7,6 @@ import com.tkpd.abstraction.extension.Result
 
 interface AccountRepository {
     suspend fun createNewToken(): Result<SessionRequestToken>
-
     suspend fun createRequestTokenWithLogin(
         username: String,
         password: String,
