@@ -1,5 +1,6 @@
 package com.tkpd.abstraction.network
 
+import com.google.gson.JsonObject
 import com.tkpd.abstraction.constant.MovieConstant
 import com.tkpd.abstraction.data.MovieDetail
 import com.tkpd.abstraction.data.PopularMovies

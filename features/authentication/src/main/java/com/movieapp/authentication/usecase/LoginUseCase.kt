@@ -2,6 +2,7 @@ package com.movieapp.authentication.usecase
 
 import com.movieapp.authentication.repository.AccountRepository
 import com.tkpd.abstraction.extension.Result
+import com.tkpd.abstraction.session.UserSession
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -15,7 +16,10 @@ import javax.inject.Inject
  * 2. get new request_token from username and password along with initial request_id
  * 3. get session_id from step 2 request_token
  */
-class AccountUseCase @Inject constructor(private val accountRepository: AccountRepository) {
+class LoginUseCase @Inject constructor(
+    private val accountRepository: AccountRepository,
+    private val userSession: UserSession
+) {
 
     suspend operator fun invoke(userName: String, password: String): Flow<Result<Boolean>> {
         return flow {
@@ -44,13 +48,12 @@ class AccountUseCase @Inject constructor(private val accountRepository: AccountR
                 } else {
                     val sessionId =
                         accountRepository.createSessionWithToken(loginData.data.requestToken)
+
+                    userSession.setSessionId((sessionId as Result.Success).data.sessionId)
+
                     emit(Result.Success(true))
                 }
             }
         }.flowOn(Dispatchers.IO)
-    }
-
-    suspend fun getAccountDetail() {
-
     }
 }

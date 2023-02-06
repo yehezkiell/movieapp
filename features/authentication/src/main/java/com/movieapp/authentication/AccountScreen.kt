@@ -19,7 +19,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.movieapp.authentication.model.AccountState
 
 @Composable
-fun LoginScreen(viewmodel: AccountViewModel = hiltViewModel()) {
+fun LoginScreen(viewModel: AccountViewModel = hiltViewModel()) {
     Surface {
         Column(
             modifier = Modifier.fillMaxHeight().fillMaxWidth().padding(16.dp),
@@ -28,10 +28,24 @@ fun LoginScreen(viewmodel: AccountViewModel = hiltViewModel()) {
         ) {
             Text(text = "Login")
 
-            val isSuccess = viewmodel.loginState.collectAsState()
+            val loginState = viewModel.loginState.collectAsState()
 
-            if (isSuccess.value is AccountState.Detail) {
-                Toast.makeText(LocalContext.current, "Sukses", Toast.LENGTH_LONG).show()
+            if (loginState.value is AccountState.Detail) {
+                Toast.makeText(LocalContext.current, "Login Success", Toast.LENGTH_LONG).show()
+            }
+
+            if (loginState.value is AccountState.RequireFieldEmpty) {
+                Toast.makeText(LocalContext.current, "Fill All Required Fields", Toast.LENGTH_LONG)
+                    .show()
+            }
+
+            if (loginState.value is AccountState.FailLogin) {
+                Toast.makeText(
+                    LocalContext.current,
+                    (loginState.value as AccountState.FailLogin).message,
+                    Toast.LENGTH_LONG
+                )
+                    .show()
             }
 
             var userName by rememberSaveable { mutableStateOf("") }
@@ -65,7 +79,7 @@ fun LoginScreen(viewmodel: AccountViewModel = hiltViewModel()) {
             Button(
                 modifier = Modifier.padding(vertical = 16.dp),
                 onClick = {
-                    viewmodel.doLogin(userName, password)
+                    viewModel.doLogin(userName, password)
                 }) {
                 Icon(
                     Icons.Filled.AccountBox,

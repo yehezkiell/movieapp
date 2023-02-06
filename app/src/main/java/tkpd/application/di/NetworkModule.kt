@@ -3,6 +3,7 @@ package tkpd.application.di
 import com.tkpd.abstraction.constant.MovieConstant
 import com.tkpd.abstraction.network.MovieAPI
 import com.tkpd.abstraction.network.RequestInterceptor
+import com.tkpd.abstraction.network.ResponseInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,6 +20,10 @@ class NetworkModule {
 
     @Provides
     @Singleton
+    fun provideResponseInterceptor() = ResponseInterceptor()
+
+    @Provides
+    @Singleton
     fun provideRequestInterceptor() = RequestInterceptor()
 
     @Provides
@@ -31,11 +36,15 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(requestInterceptor: RequestInterceptor,
-                            loggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
+    fun provideOkHttpClient(
+        requestInterceptor: RequestInterceptor,
+        loggingInterceptor: HttpLoggingInterceptor,
+        responseInterceptor: ResponseInterceptor
+    ): OkHttpClient {
         val client = OkHttpClient.Builder()
         client.addInterceptor(loggingInterceptor)
         client.addInterceptor(requestInterceptor)
+        client.addInterceptor(responseInterceptor)
         return client.build()
     }
 

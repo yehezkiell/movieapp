@@ -69,4 +69,9 @@ dependencies {
     implementation "io.coil-kt:coil-compose:2.2.2"
     implementation "androidx.lifecycle:lifecycle-viewmodel-compose:2.5.1"
     implementation "io.coil-kt:coil-compose:2.2.2"
+    implementation "androidx.datastore:datastore-preferences:$data_store_version"
+
+    implementation "com.google.dagger:hilt-android:$hilt_version"
+    kapt "com.google.dagger:hilt-compiler:$hilt_version"
+
 }
