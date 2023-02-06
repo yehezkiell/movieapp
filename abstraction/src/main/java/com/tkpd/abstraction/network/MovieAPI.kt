@@ -7,6 +7,7 @@ import com.tkpd.abstraction.data.PopularMovies
 import com.tkpd.abstraction.data.account.AccountDetail
 import com.tkpd.abstraction.data.account.SessionData
 import com.tkpd.abstraction.data.account.SessionRequestToken
+import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -21,7 +22,7 @@ interface MovieAPI {
     suspend fun getTopRatedMovies(
         @Query(MovieConstant.KEY_PAGE) page: Int,
         @Query(MovieConstant.KEY_LANGUAGE) language: String
-    ): Response<PopularMovies>
+    ): Response<JsonObject>
 
     @GET("movie/{movie_id}")
     suspend fun getMovieDetail(@Path(MovieConstant.KEY_MOVIE_ID) movieId: Int): Response<MovieDetail>

@@ -72,7 +72,6 @@ class MovieListViewModel @Inject constructor(private val movieListRepository: Mo
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 val data = movieListRepository.getMovieListFromAPI()
-
                 setEvent(MovieListEvent.MovieList((data as Result.Success).data))
             } catch (e: Throwable) {
                 setEvent(MovieListEvent.Error(e))

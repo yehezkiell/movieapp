@@ -5,8 +5,11 @@ import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.google.gson.Gson
+import com.google.gson.JsonObject
 import com.tkpd.abstraction.R
 import com.tkpd.abstraction.constant.MovieConstant.MOVIE_ORIGINAL_IMAGE
+import org.json.JSONObject
 import retrofit2.Response
 
 /**
@@ -40,6 +43,44 @@ suspend fun <T : Any> stateCall(call: suspend () -> Response<T>): Result<T> {
     } else {
         Result.Error(Throwable(call.invoke().message()))
     }
+}
+
+suspend fun <T> getData(
+    gson: Gson,
+    apiCall: suspend () -> Response<JsonObject>,
+    clazz: Class<T>
+): Result<T> {
+    return try {
+        val data: Response<JsonObject> = apiCall.invoke()
+        return data.toResult(gson, clazz)
+    } catch (e: Exception) {
+        throw Throwable(e.message)
+    }
+}
+
+private fun <T, K> Response<T>.toResult(gson: Gson, type: Class<K>): Result<K> {
+    return if (isSuccessful) {
+        val rawString = body().toString()
+        val jsonObject = rawString.toJsonObject()
+        //If there is no success field, it means the data successfully fetched
+        val isSuccess = jsonObject.optBoolean("success", true)
+
+        if (isSuccess) {
+            return Result.Success(gson.fromJson(rawString, type))
+        } else {
+            val statusMessage = jsonObject.optString(
+                "status_message",
+                "Connection Error"
+            )
+            Result.Error(Throwable(statusMessage))
+        }
+    } else {
+        Result.Error(Throwable(message()))
+    }
+}
+
+fun String.toJsonObject(): JSONObject {
+    return JSONObject(this)
 }
 
 fun String?.createImageUrl(): String {

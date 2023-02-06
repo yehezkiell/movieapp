@@ -1,5 +1,6 @@
 package tkpd.application.di
 
+import com.google.gson.Gson
 import com.tkpd.abstraction.constant.MovieConstant
 import com.tkpd.abstraction.network.MovieAPI
 import com.tkpd.abstraction.network.RequestInterceptor
@@ -20,7 +21,7 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun provideResponseInterceptor() = ResponseInterceptor()
+    fun provideGson() = Gson()
 
     @Provides
     @Singleton
@@ -38,13 +39,11 @@ class NetworkModule {
     @Singleton
     fun provideOkHttpClient(
         requestInterceptor: RequestInterceptor,
-        loggingInterceptor: HttpLoggingInterceptor,
-        responseInterceptor: ResponseInterceptor
+        loggingInterceptor: HttpLoggingInterceptor
     ): OkHttpClient {
         val client = OkHttpClient.Builder()
         client.addInterceptor(loggingInterceptor)
         client.addInterceptor(requestInterceptor)
-        client.addInterceptor(responseInterceptor)
         return client.build()
     }
 
