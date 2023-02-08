@@ -1,4 +1,4 @@
-package com.tkpd.abstraction.data
+package com.tkpd.movielist.model
 
 
 import com.google.gson.annotations.SerializedName

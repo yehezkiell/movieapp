@@ -14,9 +14,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.tkpd.abstraction.data.MovieItem
 import com.tkpd.abstraction.extension.createImageUrl
 import com.tkpd.abstraction.util.ComposeUtil.ImageBuilder
+import com.tkpd.movielist.model.MovieItem
 
 
 class MovieListLayout {

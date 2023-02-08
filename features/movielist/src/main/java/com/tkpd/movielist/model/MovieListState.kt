@@ -2,7 +2,6 @@ package com.tkpd.movielist.model
 
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.tkpd.abstraction.data.PopularMovies
 
 data class MovieListState(
     val movieList: PopularMovies = PopularMovies(),

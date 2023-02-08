@@ -1,10 +1,10 @@
 package com.tkpd.moviedetail.repository
 
 import com.google.gson.Gson
-import com.tkpd.abstraction.data.MovieDetail
 import com.tkpd.abstraction.extension.Result
 import com.tkpd.abstraction.extension.getData
 import com.tkpd.abstraction.network.MovieAPI
+import com.tkpd.moviedetail.model.MovieDetail
 import javax.inject.Inject
 
 /**

@@ -11,10 +11,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.movieapp.ApplinkConst
 import com.movieapp.Navigator
 import com.movieapp.authentication.LoginScreen
-import com.movieapp.generateDestinationArguments
 import com.tkpd.movieapp.R
 import com.tkpd.moviedetail.MovieDetailDirections
 import com.tkpd.movielist.MovieListDirections

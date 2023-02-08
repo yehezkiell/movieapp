@@ -2,10 +2,10 @@ package com.tkpd.movielist.repository
 
 import com.google.gson.Gson
 import com.tkpd.abstraction.constant.MovieConstant
-import com.tkpd.abstraction.data.PopularMovies
 import com.tkpd.abstraction.extension.Result
 import com.tkpd.abstraction.extension.getData
 import com.tkpd.abstraction.network.MovieAPI
+import com.tkpd.movielist.model.PopularMovies
 import javax.inject.Inject
 
 /**

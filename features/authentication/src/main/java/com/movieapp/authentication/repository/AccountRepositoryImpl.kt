@@ -1,9 +1,9 @@
 package com.movieapp.authentication.repository
 
 import com.google.gson.Gson
-import com.tkpd.abstraction.data.account.AccountDetail
-import com.tkpd.abstraction.data.account.SessionData
-import com.tkpd.abstraction.data.account.SessionRequestToken
+import com.movieapp.authentication.model.account.AccountDetail
+import com.movieapp.authentication.model.account.SessionData
+import com.movieapp.authentication.model.account.SessionRequestToken
 import com.tkpd.abstraction.extension.Result
 import com.tkpd.abstraction.extension.getData
 import com.tkpd.abstraction.network.MovieAPI

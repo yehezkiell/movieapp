@@ -1,6 +1,5 @@
 package com.tkpd.abstraction.data
 
-import com.google.gson.JsonObject
 import com.google.gson.annotations.SerializedName
 
 data class GlobalErrorResponse(

@@ -1,7 +1,7 @@
 package com.tkpd.moviedetail.repository
 
-import com.tkpd.abstraction.data.MovieDetail
 import com.tkpd.abstraction.extension.Result
+import com.tkpd.moviedetail.model.MovieDetail
 
 /**
  * Created by Yehezkiel on 11/06/20

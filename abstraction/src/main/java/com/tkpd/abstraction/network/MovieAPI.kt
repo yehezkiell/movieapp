@@ -2,12 +2,6 @@ package com.tkpd.abstraction.network
 
 import com.google.gson.JsonObject
 import com.tkpd.abstraction.constant.MovieConstant
-import com.tkpd.abstraction.data.MovieDetail
-import com.tkpd.abstraction.data.PopularMovies
-import com.tkpd.abstraction.data.account.AccountDetail
-import com.tkpd.abstraction.data.account.SessionData
-import com.tkpd.abstraction.data.account.SessionRequestToken
-import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.POST

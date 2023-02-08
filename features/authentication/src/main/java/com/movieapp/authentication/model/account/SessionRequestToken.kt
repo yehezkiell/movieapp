@@ -1,4 +1,4 @@
-package com.tkpd.abstraction.data.account
+package com.movieapp.authentication.model.account
 
 import com.google.gson.annotations.SerializedName
 

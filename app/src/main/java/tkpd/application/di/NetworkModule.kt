@@ -4,7 +4,6 @@ import com.google.gson.Gson
 import com.tkpd.abstraction.constant.MovieConstant
 import com.tkpd.abstraction.network.MovieAPI
 import com.tkpd.abstraction.network.RequestInterceptor
-import com.tkpd.abstraction.network.ResponseInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
