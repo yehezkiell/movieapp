@@ -40,13 +40,12 @@ class MainActivity : ComponentActivity() {
                 }) { innerPadding ->
                 NavHost(
                     navController = navController,
-                    startDestination = MovieListDirections.destination,
-                    modifier = Modifier.padding(innerPadding)
+                    startDestination = MovieListDirections.destination
                 ) {
                     //movie list screen
                     MovieListDirections.screenWithPaddingBottomBar(
                         this,
-                        0.dp
+                        innerPadding.calculateBottomPadding()
                     )
 
                     //movie detail screen

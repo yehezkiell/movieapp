@@ -17,6 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.movieapp.authentication.model.AccountState
+import com.tkpd.abstraction.ui.LoadingButton
 
 @Composable
 fun LoginScreen(viewModel: AccountViewModel = hiltViewModel()) {
@@ -31,19 +32,19 @@ fun LoginScreen(viewModel: AccountViewModel = hiltViewModel()) {
             val loginState = viewModel.loginState.collectAsState()
 
             if (loginState.value is AccountState.Detail) {
-                Toast.makeText(LocalContext.current, "Login Success", Toast.LENGTH_LONG).show()
+                Toast.makeText(LocalContext.current, "Login Success", Toast.LENGTH_SHORT).show()
             }
 
-            if (loginState.value is AccountState.RequireFieldEmpty) {
-                Toast.makeText(LocalContext.current, "Fill All Required Fields", Toast.LENGTH_LONG)
+            if (loginState.value is AccountState.Error.RequireFieldEmpty) {
+                Toast.makeText(LocalContext.current, "Fill All Required Fields", Toast.LENGTH_SHORT)
                     .show()
             }
 
-            if (loginState.value is AccountState.FailLogin) {
+            if (loginState.value is AccountState.Error.FailLogin) {
                 Toast.makeText(
                     LocalContext.current,
-                    (loginState.value as AccountState.FailLogin).message,
-                    Toast.LENGTH_LONG
+                    (loginState.value as AccountState.Error.FailLogin).message,
+                    Toast.LENGTH_SHORT
                 )
                     .show()
             }
@@ -76,18 +77,36 @@ fun LoginScreen(viewModel: AccountViewModel = hiltViewModel()) {
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
             )
 
-            Button(
-                modifier = Modifier.padding(vertical = 16.dp),
+            LoadingButton(
                 onClick = {
                     viewModel.doLogin(userName, password)
-                }) {
-                Icon(
-                    Icons.Filled.AccountBox,
-                    contentDescription = null
-                )
-                Spacer(modifier = Modifier.width(10.dp))
-                Text(text = "Login")
-            }
+                },
+                modifier = Modifier.padding(vertical = 16.dp),
+                loading = loginState.value is AccountState.Loading,
+                content = {
+                    Row {
+                        Icon(
+                            Icons.Filled.AccountBox,
+                            contentDescription = null
+                        )
+                        Spacer(modifier = Modifier.width(10.dp))
+                        Text(text = "Login")
+                    }
+                }
+            )
+
+//            Button(
+//                modifier = Modifier.padding(vertical = 16.dp),
+//                onClick = {
+//                    viewModel.doLogin(userName, password)
+//                }) {
+//                Icon(
+//                    Icons.Filled.AccountBox,
+//                    contentDescription = null
+//                )
+//                Spacer(modifier = Modifier.width(10.dp))
+//                Text(text = "Login")
+//            }
         }
     }
 }

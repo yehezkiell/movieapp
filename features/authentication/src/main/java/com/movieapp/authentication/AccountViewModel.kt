@@ -21,11 +21,15 @@ class AccountViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _loginState: MutableStateFlow<AccountState> =
-        MutableStateFlow(AccountState.Loading)
+        MutableStateFlow(AccountState.Idle)
     val loginState: StateFlow<AccountState>
         get() = _loginState
 
     fun doLogin(userName: String, password: String) {
+        _loginState.update {
+            AccountState.Loading
+        }
+
         if (userName.isEmpty()) {
             updateFieldEmpty()
             return
@@ -52,7 +56,7 @@ class AccountViewModel @Inject constructor(
                     }
                     is Result.Error -> {
                         _loginState.update {
-                            AccountState.FailLogin(data.throwable.message ?: "")
+                            AccountState.Error.FailLogin(data.throwable.message ?: "")
                         }
                     }
                     else -> {
@@ -64,7 +68,7 @@ class AccountViewModel @Inject constructor(
 
     private fun updateFieldEmpty() {
         _loginState.update {
-            AccountState.RequireFieldEmpty
+            AccountState.Error.RequireFieldEmpty
         }
     }
 }
