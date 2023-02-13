@@ -2,7 +2,6 @@ package com.tkpd.movielist
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp

@@ -10,7 +10,6 @@ import com.tkpd.abstraction.session.UserSession
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -21,22 +20,20 @@ class AccountViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _loginState: MutableStateFlow<AccountState> =
-        MutableStateFlow(AccountState.Idle)
+        MutableStateFlow(AccountState())
     val loginState: StateFlow<AccountState>
         get() = _loginState
 
     fun doLogin(userName: String, password: String) {
-        _loginState.update {
-            AccountState.Loading
-        }
+        _loginState.value = AccountState(loading = true)
 
         if (userName.isEmpty()) {
-            updateFieldEmpty()
+            _loginState.value = AccountState(error = "Username Shouldn't Empty")
             return
         }
 
         if (password.isEmpty()) {
-            updateFieldEmpty()
+            _loginState.value = AccountState(error = "Password Shouldn't Empty")
             return
         }
 
@@ -46,18 +43,14 @@ class AccountViewModel @Inject constructor(
             loginData.collect { data ->
                 when (data) {
                     is Result.Success -> {
-                        _loginState.update {
-                            AccountState.Detail
-                        }
+                        _loginState.value = AccountState(success = true)
 
                         userSession.getSessionId().collect {
                             Log.e("asd", it)
                         }
                     }
                     is Result.Error -> {
-                        _loginState.update {
-                            AccountState.Error.FailLogin(data.throwable.message ?: "")
-                        }
+                        _loginState.value = AccountState(error = data.throwable.message)
                     }
                     else -> {
                     }
@@ -66,9 +59,7 @@ class AccountViewModel @Inject constructor(
         }
     }
 
-    private fun updateFieldEmpty() {
-        _loginState.update {
-            AccountState.Error.RequireFieldEmpty
-        }
+    fun resetErrorMessage() {
+        _loginState.tryEmit(AccountState())
     }
 }

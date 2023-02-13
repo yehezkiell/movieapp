@@ -1,11 +1,18 @@
 package com.movieapp.authentication.model
 
-sealed class AccountState {
-    object Detail : AccountState()
-    object Loading : AccountState()
-    object Idle : AccountState()
-    sealed class Error : AccountState() {
-        class FailLogin(val message: String) : Error()
-        object RequireFieldEmpty : Error()
-    }
+enum class ResourceState { LOADING, ERROR, SUCCESS, IDLE }
+
+data class AccountState(
+    val idle: Boolean = true,
+    val loading: Boolean = false,
+    val error: String? = null,
+    val success: Boolean? = null
+) {
+    val state: ResourceState
+        get() {
+            return if (loading) ResourceState.LOADING
+            else if (error != null) ResourceState.ERROR
+            else if (success != null) ResourceState.SUCCESS
+            else ResourceState.IDLE
+        }
 }
