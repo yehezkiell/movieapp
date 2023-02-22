@@ -19,7 +19,7 @@ import com.tkpd.abstraction.ui.LoadingButton
 import tkpd.application.util.LocalSnackbarHostState
 
 @Composable
-fun LoginScreen(viewModel: AccountViewModel = hiltViewModel()) {
+fun LoginScreen(viewModel: AccountViewModel = hiltViewModel(), addCounter: () -> Unit) {
     Surface {
         Column(
             modifier = Modifier.fillMaxHeight().fillMaxWidth().padding(16.dp),
@@ -84,6 +84,7 @@ fun LoginScreen(viewModel: AccountViewModel = hiltViewModel()) {
             LoadingButton(
                 onClick = {
                     viewModel.doLogin(userName, password)
+                    addCounter.invoke()
                 },
                 modifier = Modifier.padding(vertical = 16.dp),
                 loading = loginState.value.state == ResourceState.LOADING,
@@ -107,6 +108,6 @@ fun LoginScreen(viewModel: AccountViewModel = hiltViewModel()) {
 @Composable
 fun AccountScreenPreview() {
     Surface {
-        LoginScreen()
+        LoginScreen(){}
     }
 }

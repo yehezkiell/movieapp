@@ -5,7 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberScaffoldState
-import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.*
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -31,13 +31,17 @@ class MainActivity : ComponentActivity() {
         setContent {
             val navController = rememberNavController()
             val scaffoldState = rememberScaffoldState()
+            var count by remember {
+                mutableStateOf(1)
+            }
+
             navigator.setController(navController)
             CompositionLocalProvider(
                 LocalSnackbarHostState provides scaffoldState.snackbarHostState
             ) {
                 Scaffold(scaffoldState = scaffoldState,
                     bottomBar = {
-                        BottomNavBar(navController)
+                        BottomNavBar(navController, count)
                     }) { innerPadding ->
                     NavHost(
                         navController = navController,
@@ -47,14 +51,18 @@ class MainActivity : ComponentActivity() {
                         MovieListDirections.screenWithPaddingBottomBar(
                             this,
                             innerPadding.calculateBottomPadding()
-                        )
+                        ) {
+                            count++
+                        }
 
                         //movie detail screen
                         MovieDetailDirections.screen(this)
 
                         //login screen
                         composable("authentication") {
-                            LoginScreen()
+                            LoginScreen(){
+                                count++
+                            }
                         }
                     }
                 }

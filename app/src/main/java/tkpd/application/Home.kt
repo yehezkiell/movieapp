@@ -23,7 +23,7 @@ sealed class Screen(val route: String, val resourceId: String, val icon: ImageVe
 }
 
 @Composable
-fun BottomNavBar(navController: NavController) {
+fun BottomNavBar(navController: NavController, counter: Int) {
     val items = listOf(
         Screen.Home,
         Screen.Account
@@ -35,7 +35,8 @@ fun BottomNavBar(navController: NavController) {
         BottomNavigation(
             backgroundColor = Color.Gray, contentColor = Color.Black
         ) {
-            items.forEach { item ->
+            for (i in 0 until counter) {
+                val item = items[i]
                 BottomNavigationItem(icon = {
                     Icon(
                         item.icon,
@@ -68,5 +69,5 @@ fun BottomNavBar(navController: NavController) {
 @Composable
 @Preview
 fun BottomNavigationPreview() {
-    BottomNavBar(rememberNavController())
+    BottomNavBar(rememberNavController(), 2)
 }

@@ -19,9 +19,11 @@ object MovieListDirections : NavigationCommand {
     override fun screen(builder: NavGraphBuilder) {
     }
 
-    fun screenWithPaddingBottomBar(builder: NavGraphBuilder, dp: Dp) {
+    fun screenWithPaddingBottomBar(builder: NavGraphBuilder, dp: Dp, click: () -> Unit) {
         builder.composable(destination) {
-            MovieListMainView(bottomBarHeight = dp)
+            MovieListMainView(bottomBarHeight = dp) {
+                click.invoke()
+            }
         }
     }
 }

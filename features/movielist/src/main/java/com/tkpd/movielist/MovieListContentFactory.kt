@@ -11,7 +11,8 @@ import com.tkpd.abstraction.util.ComposeUtil
 @Composable
 fun MovieListMainView(
     viewModel: MovieListViewModel = hiltViewModel(),
-    bottomBarHeight: Dp
+    bottomBarHeight: Dp,
+    click:()->Unit
 ) {
     val movieList by viewModel.movieList.collectAsState()
     viewModel.setPadding(bottomBarHeight)
@@ -33,7 +34,8 @@ fun MovieListMainView(
             modifier = Modifier.padding(0.dp, 0.dp, 0.dp, paddingBottom.dp),
             movies = movieList.movieList.movieItems,
             onItemClick = {
-                viewModel.onMovieClicked(it)
+                click.invoke()
+//                viewModel.onMovieClicked(it)
             })
     }
 }
