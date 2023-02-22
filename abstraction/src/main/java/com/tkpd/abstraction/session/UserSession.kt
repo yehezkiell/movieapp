@@ -8,7 +8,10 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -17,6 +20,7 @@ class UserSession @Inject constructor(@ApplicationContext private val applicatio
     private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "usersession")
     private val SESSION_ID = stringPreferencesKey("session_id")
 
+    val sessionId = MutableStateFlow("")
 
     fun getSessionId(): Flow<String> {
         return applicationContext.dataStore.data
@@ -24,6 +28,10 @@ class UserSession @Inject constructor(@ApplicationContext private val applicatio
                 // No type safety.
                 preferences[SESSION_ID] ?: ""
             }
+    }
+
+    fun getSessionIdBlocking() = runBlocking {
+        getSessionId().first()
     }
 
     suspend fun setSessionId(sessionId: String) {

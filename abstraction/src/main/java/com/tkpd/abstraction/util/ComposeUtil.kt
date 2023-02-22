@@ -1,5 +1,7 @@
 package com.tkpd.abstraction.util
 
+import android.graphics.drawable.Drawable
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.CircularProgressIndicator
@@ -21,7 +23,11 @@ import com.tkpd.abstraction.R
 object ComposeUtil {
 
     @Composable
-    fun ImageBuilder(modifier: Modifier, url: String) {
+    fun ImageBuilder(
+        modifier: Modifier,
+        url: String,
+        contentScale: ContentScale = ContentScale.FillBounds
+    ) {
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
                 .data(url)
@@ -30,7 +36,7 @@ object ComposeUtil {
             placeholder = painterResource(R.drawable.ic_image_black_24dp),
             error = painterResource(R.drawable.ic_broken_image_black_24dp),
             contentDescription = "",
-            contentScale = ContentScale.FillBounds,
+            contentScale = contentScale,
             modifier = modifier
         )
     }

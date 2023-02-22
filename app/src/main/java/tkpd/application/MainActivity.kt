@@ -10,6 +10,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.movieapp.Navigator
+import com.movieapp.authentication.AccountScreen
 import com.movieapp.authentication.LoginScreen
 import com.tkpd.movieapp.R
 import com.tkpd.moviedetail.MovieDetailDirections
@@ -60,7 +61,7 @@ class MainActivity : ComponentActivity() {
 
                         //login screen
                         composable("authentication") {
-                            LoginScreen(){
+                            AccountScreen{
                                 count++
                             }
                         }

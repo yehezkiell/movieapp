@@ -1,5 +1,6 @@
 package com.movieapp.authentication.usecase
 
+import com.movieapp.authentication.model.account.AccountDetail
 import com.movieapp.authentication.repository.AccountRepository
 import com.tkpd.abstraction.extension.Result
 import com.tkpd.abstraction.session.UserSession
@@ -7,6 +8,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 /**
@@ -21,7 +23,7 @@ class LoginUseCase @Inject constructor(
     private val userSession: UserSession
 ) {
 
-    suspend operator fun invoke(userName: String, password: String): Flow<Result<Boolean>> {
+    suspend operator fun invoke(userName: String, password: String): Flow<Result<AccountDetail>> {
         return flow {
             val newToken = accountRepository.createNewToken()
 
@@ -46,14 +48,23 @@ class LoginUseCase @Inject constructor(
                 if (!loginData.data.success) {
                     emit(Result.Error(Throwable("Fail")))
                 } else {
-                    val sessionId =
+                    val createSessionResult =
                         accountRepository.createSessionWithToken(loginData.data.requestToken)
+                    val sessionId = (createSessionResult as Result.Success).data.sessionId
 
-                    userSession.setSessionId((sessionId as Result.Success).data.sessionId)
+                    assignSessionId(sessionId)
 
-                    emit(Result.Success(true))
+                    val accountDetail = accountRepository.getDetailAccount(sessionId)
+                    emit(accountDetail)
                 }
             }
         }.flowOn(Dispatchers.IO)
     }
+
+    private fun assignSessionId(sessionId: String) {
+        runBlocking {
+            userSession.setSessionId(sessionId)
+        }
+    }
+
 }

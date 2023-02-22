@@ -9,7 +9,11 @@ object MovieConstant {
     const val PARAM_MOVIE_ID = "MOVIE_ID"
     const val DEFAULT_PAGE_PARAM = 1
     const val DEFAULT_LANGUAGE_PARAM = "en-US"
-    const val MOVIE_ORIGINAL_IMAGE = "https://image.tmdb.org/t/p/original"
+
+    /*
+    Check Image size here https://www.themoviedb.org/talk/53c11d4ec3a3684cf4006400
+     */
+    const val MOVIE_ORIGINAL_IMAGE = "https://image.tmdb.org/t/p/w780"
 
     const val KEY_LANGUAGE = "language"
     const val KEY_PAGE = "page"
