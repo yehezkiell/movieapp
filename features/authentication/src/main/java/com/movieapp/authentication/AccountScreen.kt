@@ -8,6 +8,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountBox
+import androidx.compose.material.icons.filled.Clear
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
@@ -29,7 +30,7 @@ import com.tkpd.abstraction.util.ComposeUtil.ImageBuilder
 import tkpd.application.util.LocalSnackbarHostState
 
 @Composable
-fun AccountScreen(viewModel: AccountViewModel = hiltViewModel(), addCounter: () -> Unit) {
+fun AccountScreen(viewModel: AccountViewModel = hiltViewModel()) {
     val isLoggedIn = viewModel.isLoggedIn.collectAsState().value
 
     Surface {
@@ -37,18 +38,18 @@ fun AccountScreen(viewModel: AccountViewModel = hiltViewModel(), addCounter: () 
 
         if (isLoggedIn) {
             AccountDetailScreen(
+                viewModel,
                 loginState.value.data.avatar.tmdb.avatarPath,
                 loginState.value.data.userName
             )
         } else {
-            LoginScreen(viewModel) {
-            }
+            LoginScreen(viewModel)
         }
     }
 }
 
 @Composable
-fun LoginScreen(viewModel: AccountViewModel, addCounter: () -> Unit) {
+fun LoginScreen(viewModel: AccountViewModel) {
     Surface {
         Column(
             modifier = Modifier.fillMaxHeight().fillMaxWidth().padding(16.dp),
@@ -105,7 +106,6 @@ fun LoginScreen(viewModel: AccountViewModel, addCounter: () -> Unit) {
                 onClick = {
                     viewModel.doLogin(userName, password)
                 },
-                modifier = Modifier.padding(vertical = 16.dp),
                 loading = loginState.value.state == ResourceState.LOADING,
                 content = {
                     Row {
@@ -124,7 +124,7 @@ fun LoginScreen(viewModel: AccountViewModel, addCounter: () -> Unit) {
 }
 
 @Composable
-fun AccountDetailScreen(imageUrl: String, userName: String) {
+fun AccountDetailScreen(viewModel: AccountViewModel, imageUrl: String, userName: String) {
     Column(
         modifier = Modifier.fillMaxHeight().fillMaxWidth().padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -149,6 +149,24 @@ fun AccountDetailScreen(imageUrl: String, userName: String) {
         }
 
         Text(modifier = Modifier.padding(16.dp), text = userName)
+
+        LoadingButton(
+            onClick = {
+                viewModel.doLogout()
+            },
+            modifier = Modifier.padding(vertical = 16.dp),
+            loading = false,
+            content = {
+                Row {
+                    Icon(
+                        Icons.Filled.Clear,
+                        contentDescription = null
+                    )
+                    Spacer(modifier = Modifier.width(10.dp))
+                    Text(text = "Logout")
+                }
+            }
+        )
     }
 }
 
@@ -156,6 +174,6 @@ fun AccountDetailScreen(imageUrl: String, userName: String) {
 @Composable
 fun AccountScreenPreview() {
     Surface {
-        AccountDetailScreen("", "Yehezkiel")
+//        AccountDetailScreen("", "Yehezkiel")
     }
 }

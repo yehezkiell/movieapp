@@ -17,6 +17,7 @@ class RequestInterceptor : Interceptor {
             request.url.newBuilder().addQueryParameter(MovieConstant.API_KEY_PARAM, API_KEY.VALUE)
                 .build()
         request = request.newBuilder().url(url).build()
+
         return chain.proceed(request)
     }
 }

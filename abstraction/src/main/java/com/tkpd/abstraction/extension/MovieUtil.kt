@@ -1,5 +1,6 @@
 package com.tkpd.abstraction.extension
 
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
@@ -46,6 +47,7 @@ suspend fun <T> getData(
         val data: Response<JsonObject> = apiCall.invoke()
         return data.toResult(gson, clazz)
     } catch (e: Exception) {
+        Log.e("errr","ke throw")
         throw Throwable(e.message)
     }
 }

@@ -1,0 +1,7 @@
+apply plugin: 'com.android.library'
+apply from: "$rootDir/common.gradle"
+
+dependencies {
+    implementation project(":abstraction")
+    implementation project(":navigation")
+}

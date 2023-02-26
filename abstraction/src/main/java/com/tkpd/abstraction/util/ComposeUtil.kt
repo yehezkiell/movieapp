@@ -8,6 +8,7 @@ import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -16,11 +17,18 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.ViewModelStoreOwner
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.tkpd.abstraction.R
 
 object ComposeUtil {
+
+    @Composable
+    fun rememberViewModelStoreOwner(): ViewModelStoreOwner {
+        val context = LocalContext.current
+        return remember(context) { context as ViewModelStoreOwner }
+    }
 
     @Composable
     fun ImageBuilder(

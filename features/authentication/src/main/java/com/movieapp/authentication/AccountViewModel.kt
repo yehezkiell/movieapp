@@ -56,6 +56,15 @@ class AccountViewModel @Inject constructor(
         }
     }
 
+    fun doLogout() {
+        viewModelScope.launch {
+            userSession.clearSessionId()
+            _isLoggedIn.update {
+                false
+            }
+        }
+    }
+
     fun doLogin(userName: String, password: String) {
         _loginState.value = AccountState(loading = true)
 

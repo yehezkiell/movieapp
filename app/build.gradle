@@ -13,4 +13,5 @@ dependencies {
     implementation project(":features:moviedetail")
     implementation project(":features:movielist")
     implementation project(":features:authentication")
+    implementation project(":features:favorite")
 }

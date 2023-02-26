@@ -21,7 +21,6 @@ class UserSession @Inject constructor(@ApplicationContext private val applicatio
     private val SESSION_ID = stringPreferencesKey("session_id")
 
     val sessionId = MutableStateFlow("")
-
     fun getSessionId(): Flow<String> {
         return applicationContext.dataStore.data
             .map { preferences ->
@@ -37,6 +36,12 @@ class UserSession @Inject constructor(@ApplicationContext private val applicatio
     suspend fun setSessionId(sessionId: String) {
         applicationContext.dataStore.edit {
             it[SESSION_ID] = sessionId
+        }
+    }
+
+    suspend fun clearSessionId() {
+        applicationContext.dataStore.edit {
+            it.remove(SESSION_ID)
         }
     }
 
