@@ -2,19 +2,16 @@ package tkpd.application
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
-import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberScaffoldState
-import androidx.compose.runtime.*
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.movieapp.Navigator
 import com.movieapp.authentication.AccountScreen
 import com.movieapp.favorite.ui.FavoriteUI
-import com.tkpd.abstraction.ui.ActivitySharedViewModel
 import com.tkpd.abstraction.util.ComposeUtil.rememberViewModelStoreOwner
 import com.tkpd.movieapp.R
 import com.tkpd.moviedetail.MovieDetailDirections
@@ -49,28 +46,13 @@ class MainActivity : ComponentActivity() {
                 LocalSnackbarHostState provides scaffoldState.snackbarHostState,
                 LocalNavGraphViewModelStoreOwner provides vmStoreOwner
             ) {
-                val sharedViewModel: ActivitySharedViewModel =
-                    viewModel(viewModelStoreOwner = LocalNavGraphViewModelStoreOwner.current)
-                val isLoggedIn = sharedViewModel.isLoggedIn.collectAsState()
-
-                var startDestination by remember { mutableStateOf(MovieListDirections.destination) }
-                var prevLoginState by remember { mutableStateOf(isLoggedIn.value) }
-
-                SideEffect {
-                    prevLoginState = isLoggedIn.value
-                }
-
-                if (prevLoginState != isLoggedIn.value) {
-                    startDestination = "authentication"
-                }
-
                 Scaffold(scaffoldState = scaffoldState,
                     bottomBar = {
                         BottomNavBar(navController)
                     }) { innerPadding ->
                     NavHost(
                         navController = navController,
-                        startDestination = startDestination
+                        startDestination = MovieListDirections.destination
                     ) {
                         //movie list screen
                         MovieListDirections.screenWithPaddingBottomBar(
@@ -81,17 +63,14 @@ class MainActivity : ComponentActivity() {
                         //movie detail screen
                         MovieDetailDirections.screen(this)
 
-                        if (isLoggedIn.value) {
-                            composable("favorite") {
-                                FavoriteUI()
-                            }
+                        composable("favorite") {
+                            FavoriteUI()
                         }
 
                         //login screen
                         composable("authentication") {
                             AccountScreen()
                         }
-
                     }
                 }
             }

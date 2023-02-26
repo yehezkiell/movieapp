@@ -32,19 +32,19 @@ sealed class Screen(val route: String, val textString: String, val icon: ImageVe
 
 @Composable
 fun BottomNavBar(navController: NavController) {
-    val sharedViewModel: ActivitySharedViewModel =
-        viewModel(viewModelStoreOwner = LocalNavGraphViewModelStoreOwner.current)
-
-    val isLoggedIn = sharedViewModel.isLoggedIn.collectAsState().value
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
+
+    val sharedViewModel: ActivitySharedViewModel =
+        viewModel(viewModelStoreOwner = LocalNavGraphViewModelStoreOwner.current)
+    val isLoggedIn = sharedViewModel.isLoggedIn.collectAsState()
 
     val items = mutableListOf(
         Screen.Home,
         Screen.Account
     )
 
-    if (isLoggedIn) {
+    if (isLoggedIn.value) {
         items.add(1, Screen.Favorite)
     }
 

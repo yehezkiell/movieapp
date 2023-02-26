@@ -24,7 +24,7 @@ class ActivitySharedViewModel @Inject constructor(
     init {
         viewModelScope.launch(Dispatchers.Main) {
             userSession.getSessionId().collect {
-                _isLoggedIn.tryEmit(userSession.getSessionIdBlocking().isNotEmpty())
+                _isLoggedIn.tryEmit(it.isNotEmpty())
             }
         }
     }
