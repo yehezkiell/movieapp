@@ -14,15 +14,14 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.tkpd.abstraction.ui.ActivitySharedViewModel
-import tkpd.application.util.LocalNavGraphViewModelStoreOwner
+import com.tkpd.abstraction.session.UserSession
 
 sealed class Screen(val route: String, val textString: String, val icon: ImageVector) {
     object Home : Screen("movieList", "Home", Icons.Filled.Home)
@@ -34,17 +33,17 @@ sealed class Screen(val route: String, val textString: String, val icon: ImageVe
 fun BottomNavBar(navController: NavController) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
+    val context = LocalContext.current
 
-    val sharedViewModel: ActivitySharedViewModel =
-        viewModel(viewModelStoreOwner = LocalNavGraphViewModelStoreOwner.current)
-    val isLoggedIn = sharedViewModel.isLoggedIn.collectAsState()
+    val userSession = UserSession(context)
+    val isLoggedIn = userSession.getSessionId().collectAsState("").value.isNotEmpty()
 
     val items = mutableListOf(
         Screen.Home,
         Screen.Account
     )
 
-    if (isLoggedIn.value) {
+    if (isLoggedIn) {
         items.add(1, Screen.Favorite)
     }
 

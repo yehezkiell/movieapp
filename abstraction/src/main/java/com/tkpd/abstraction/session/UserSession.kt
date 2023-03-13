@@ -17,10 +17,12 @@ import javax.inject.Singleton
 
 @Singleton
 class UserSession @Inject constructor(@ApplicationContext private val applicationContext: Context) {
-    private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "usersession")
-    private val SESSION_ID = stringPreferencesKey("session_id")
 
-    val sessionId = MutableStateFlow("")
+    companion object {
+        private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "usersession")
+        private val SESSION_ID = stringPreferencesKey("session_id")
+    }
+
     fun getSessionId(): Flow<String> {
         return applicationContext.dataStore.data
             .map { preferences ->
